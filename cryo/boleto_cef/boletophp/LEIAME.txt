@@ -1,0 +1,17 @@
+
+Alterações da Versão 0.12 para 0.13
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+1. Acrescentado o Boleto Caixa SINCO
+
+
+Alterações da Versão 0.13 para 0.14
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+1. Acrescentado o Boleto Caixa SIGCB
+
+
+Alterações da Versão 0.14 para 0.15
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+1. Acrescentado o Boleto Bancoob

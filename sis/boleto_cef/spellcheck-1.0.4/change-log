@@ -1,0 +1,60 @@
+ver 1.0.4
+
+//work regardles of register_globals
+$init = 		$_GET['init'];
+$miss_word_counter = 	$_GET['miss_word_counter'];
+$next = 		$_GET['next'];
+$asuggest =		$_GET['asuggest'];
+$csuggest =		$_GET['csuggest'];
+------------------------------------
+visual formating on right border
+change from <DIV style=\"width: 100%;.... TO <DIV style=\"width: auto;....
+
+----------------
+in function format_html_code($str)
+//to keep visual space formating convert every second space to  &nbsp;
+$str = str_replace ("  ", " &nbsp;", $str);
+// 1 space: ' ' 	-> ' '
+// 2 spaces '  '	-> ' &nbsp;'
+// 3 spaces '   '	-> ' &nbsp; '
+// 4 spaces '    '	-> ' &nbsp; &nbsp;'
+
+
+
+-----------------
+escaping '<' and '>' when passing var to JS
+$str=preg_replace("/(<)/","\\u003C",$str);
+$str=preg_replace("/(>)/","\\u003E",$str);
+
+whitout it, spell checking this code (it self)
+-----------------
+<script language="JavaScript">
+<!--
+function WriteBack(form_name,field_name,corrected_text)
+{
+ opener.document[form_name][field_name].value = corrected_text;
+}
+-->
+</script>
+------------------
+produce this result:
+------------------
+<script language="JavaScript">
+<!--
+var wb_str= "<script language=\"JavaScript\">\u000D\u000A<!--\u000D\u000Afunction WriteBack(form_name,field_name,corrected_text)\u000D\u000A{\u000D\u000A opener.document[form_name][field_name].value = corrected_text;\u000D\u000A}\u000D\u000A-->\u000D\u000A</script>\u000D\u000A";
+-->
+</script>
+------------------
+there are </script> tag inside the var wb_str="" which is before the actual end </script> tag. 
+the first tag is incorrectly interpret as the end of the script. 
+
+ver 1.0.2
+1.fixing CRLF handling in FireFox and IE
+when passing var to JS must pass unicode char(\u000D \u000A) for CRLF not just \c\r
+$str=preg_replace("/(\n)/","\\u000D\\u000A",$str);
+
+2.minor interface changing
+
+
+ver 1.0.0
+initial/ stable working

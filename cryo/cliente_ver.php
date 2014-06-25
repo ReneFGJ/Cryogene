@@ -31,6 +31,7 @@ echo '<TD width="2%">&nbsp;';
 echo '<TD width="73%">';
 echo $bol->mostra_boleto_resumo($ct->contratos);
 echo $bol->mostra_boleto_contrato($ct->contratos);
+echo $bol->gerar_boleto_individual($cl->id);
 echo '</table>';
 
 echo $hd->foot();

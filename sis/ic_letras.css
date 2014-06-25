@@ -1,0 +1,12 @@
+ <style>
+body {BACKGROUND-POSITION: center 50%; FONT-SIZE: 9px; BACKGROUND-IMAGE: url(/img/ic_bg.gif); MARGIN: 0px; COLOR: #<%=corbg%>; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt; font-weight: normal; color: #000000}
+.iclt0 { font-family: Tahoma; font-size: 10px; color: #000000; text-decoration: none }
+.iclt1 { font-family: Tahoma; font-size: 12px; color: #000000; text-decoration: none }
+.iclt2 { font-family: Tahoma; font-size: 14px; color: #000000; text-decoration: none }
+.iclt3 { font-family: Tahoma; font-size: 16px; color: #000000; text-decoration: none }
+.iclt4 { font-family: Tahoma; font-size: 18px; color: #000000; text-decoration: none }
+.iclt5 { font-family: Tahoma; font-size: 20px; color: #C0C0C0; text-decoration: none }
+.iced { font-family: Tahoma; font-size: 12px; color: #000000; text-decoration: none }
+.img2 { padding: 1px;	border: 1px solid #C2BDB3;background: #fff; color: #000; }
+.fp1 { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; line-height: 150%; color: #333333; 	margin:3px 0px 3px 0px; padding:3px 0px 3px 0px; text-align: justify; }
+</style>

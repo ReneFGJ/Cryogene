@@ -4,6 +4,46 @@ class contrato
 	var $tabela = "contrato";
 	var $contratos=array();
 	
+	function cp_avulso()
+		{
+			global $cp;
+			$cp = array();
+			
+		}
+	
+	function selecionar_contrato($cliente)
+		{
+			global $dd,$acao;
+			$sql = "select * from contrato 
+					where ctr_pai = '$cliente' or ctr_mae = '$cliente' or ctr_cobranca = '$cliente'
+					order by ctr_dt_assinatura
+			";
+			$rlt = db_query($sql);
+			$id = 0;
+			$sx = '<form method="post" action="'.page().'">';
+			$sx .= '<input type="hidden" name="dd0" value="'.$dd[0].'">'.chr(13).chr(10);
+			$sx .= '<input type="hidden" name="dd1" value="'.$dd[1].'">'.chr(13).chr(10);
+			$sx .= '<BR><B>Selecione o contrato</b><HR>';
+			while ($line = db_read($rlt))
+				{
+					$id++;
+					$contrato = $line['ctr_numero'];
+					$status = $line['ctr_status'];
+					$rn = fmt_data($line['ctr_parto_data']);
+					$ass = fmt_data($line['ctr_dt_assinatura']);
+					
+					$sx .= '<input type="radio" name="dd2" value="'.$contrato.'">'.$contrato.' - Nascimento em '.$rn.', contrato assinato em '.$ass.'<BR>';
+				}
+			if ($id == 0)
+				{
+					$sx .= '<font color="red">Não foi localizado contrato para este cliente</font>';
+				} else {
+					$sx .= '<input type="submit" value="selecionar contrato >>>>">';
+				}
+			$sx .= '</form>';
+			return($sx);
+		}
+	
 	function mostra()
 		{
 			$line = $this->line;

@@ -1,6 +1,6 @@
 <?php
 require('db.php');
-
+echo '<H1>'.($id++).'<h1>';
 require("_class/_class_login.php");
 $nw = new login;
 

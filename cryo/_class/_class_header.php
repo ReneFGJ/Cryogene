@@ -34,7 +34,7 @@ class header
 						<link rel="stylesheet" href="css/style_main.css" type="text/css" media="screen" />
 						<link rel="stylesheet" href="css/style_font.css" type="text/css" media="screen" />
 						<link rel="stylesheet" href="css/style_menu.css" type="text/css" media="screen" />
-						<script  rel="text/javascript" src="'.$http.'js/jquery-1.7.1.js"></script>												
+						<script  rel="text/javascript" src="js/jquery.js"></script>												
 					</head>
 			<body>';
 			$sx .= $this->topmenu();			

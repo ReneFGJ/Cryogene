@@ -1,0 +1,36 @@
+Cheque sem fundos: 
+motivo 11 - cheque sem fundos na primeira apresentação; 
+motivo 12 - cheque sem fundos na segunda apresentação; 
+motivo 13 - conta encerrada; 
+motivo 14 - prática espúria. 
+Impedimento ao pagamento: 
+motivo 20 - folha de cheque cancelada por solicitação do correntista; 
+motivo 21 - contra-ordem (ou revogação) ou oposição (ou sustação) ao pagamento solicitada pelo emitente ou pelo beneficiário; 
+motivo 22 - divergência ou insuficiência de assinatura; 
+motivo 23 - cheques emitidos por entidades e órgãos da administração pública federal direta e indireta, em desacordo com os requisitos constantes do artigo 74, 2º, do decreto-lei nº 200, de 25.2.67; 
+motivo 24 - bloqueio judicial ou determinação do Banco Central; 
+motivo 25 - cancelamento de talonário pelo banco sacado; 
+motivo 26 - inoperância temporária de transporte; 
+motivo 27 - feriado municipal não previsto; 
+motivo 28 - contra-ordem (ou revogação) ou oposição (ou sustação), motivada por furto ou roubo, com apresentação do registro da ocorrência policial; 
+motivo 29 - cheque bloqueado por falta de confirmação do recebimento do talão de cheques pelo correntista; 
+motivo 30 - furto ou roubo de malotes. 
+Cheque com irregularidade: 
+motivo 31 - erro formal (sem data de emissão, mês grafado numericamente, sem assinatura, sem valor por extenso); 
+motivo 32 - ausência ou irregularidade na aplicação do carimbo de compensação; 
+motivo 33 - divergência de endosso; 
+motivo 34 - cheque apresentado por estabelecimento bancário que não o indicado no cruzamento em preto, sem o endosso-mandato; 
+motivo 35 - cheque falsificado, emitido sem controle ou responsabilidade do banco, ou ainda com adulteração da praça sacada; 
+motivo 36 - cheque emitido com mais de um endosso; 
+motivo 37 - registro inconsistente - compensação eletrônica. 
+Apresentação indevida: 
+motivo 40 - moeda inválida; 
+motivo 41 - cheque apresentado a banco que não o sacado; 
+motivo 42 - cheque não compensável na sessão ou sistema de compensação em que apresentado; 
+motivo 43 - cheque devolvido anteriormente pelos motivos 21, 22, 23, 24, 31 e 34, não passível de reapresentação em virtude de persistir o motivo da devolução; 
+motivo 44 - cheque prescrito (fora do prazo); 
+motivo 45 - cheque emitido por entidade obrigada a realizar movimentação e utilização de recursos financeiros do tesouro nacional mediante ordem bancária; 
+motivo 46 - CR - Comunicação de Remessa, quando o cheque correspondente não for entregue ao banco sacado nos prazos estabelecidos; 
+motivo 47 - CR - Comunicação de Remessa com ausência ou inconsistência de dados obrigatórios referentes ao cheque correspondente; 
+motivo 48 - cheque de valor superior a R$ 100,00 (cem reais), emitido sem a identificação do beneficiário, acaso encaminhado ao SCCOP, devendo ser devolvido a qualquer tempo; 
+motivo 49 - remessa nula, caracterizada pela reapresentação de cheque devolvido pelos motivos 12, 13, 14, 20, 25, 28, 30, 35, 43, 44 e 45, podendo a sua devolução ocorrer a qualquer tempo.

@@ -45,6 +45,7 @@ for ($r=0;$r<count($contratos);$r++)
 
 			echo $bol->mostra_boleto_resumo($ctr);
 			echo $bol->mostra_boleto_contrato($ctr);
+			echo $bol->gerar_boleto_individual($ctr);
 			}
 	}
 echo '</table>';
