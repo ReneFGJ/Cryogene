@@ -1,6 +1,7 @@
 <?php
 require('db.php');
-echo '<H1>'.($id++).'<h1>';
+require($include.'sisdoc_debug.php');
+
 require("_class/_class_login.php");
 $nw = new login;
 
@@ -16,8 +17,7 @@ function msg($x)
 	{
 		switch ($x)
 			{
-			case "": $x = 'Campo obrigatório'; break;
-				
+			case "": $x = 'Campo obrigatório'; break;				
 			}
 			
 		return($x);

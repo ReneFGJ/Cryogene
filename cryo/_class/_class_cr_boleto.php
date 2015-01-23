@@ -132,7 +132,7 @@ class cr_boleto {
 		
 		
 		// dd5
-		array_push($cp, array('$N8', 'bol_valor_boleto', 'Valor Boleto', True, True, ''));
+		array_push($cp, array('$S10', 'bol_valor_boleto', 'Valor Boleto', True, True, ''));
 		array_push($cp, array('$HV', 'bol_aceite', 'S', False, True, ''));
 		array_push($cp, array('$H3', 'bol_especie', '', False, True, ''));
 		array_push($cp, array('$H5', 'bol_especie_doc', 'bol_especie_doc', False, True, ''));
@@ -151,8 +151,10 @@ class cr_boleto {
 		array_push($cp, array('$HV', 'bol_tx_boleto', '0', True, True, ''));
 		array_push($cp, array('$T20:6', 'bol_obs', 'Obs', False, True, ''));
 
+
+		$sql = 'select ft_nr from fatura where ft_status=1 and ft_contrato =' . chr(39) . $dd[2] . chr(39) . ' order by ft_nr desc ';
 		array_push($cp, array('$HV', 'bol_status', 'A', False, True, ''));
-		array_push($cp, array('$Q ft_nra:ft_nr:select substr(ft_data_documento,1,4) as ft_nra, ft_nr from fatura where ft_status=1 and ft_contrato =' . chr(39) . $dd[2] . chr(39) . ' order by ft_nr desc', 'bol_fatura', 'N. Fatura', True, True, ''));
+		array_push($cp, array('$Q ft_nr:ft_nr:select ft_nr from fatura where ft_status=1 and ft_contrato =' . chr(39) . $dd[2] . chr(39) . ' order by ft_nr desc', 'bol_fatura', 'N. Fatura', True, True, ''));
 		array_push($cp, array('$HV', 'bol_tipo', 'A', True, True, ''));
 		array_push($cp, array('$HV', 'bol_nosso_numero','', False, True, ''));
 		return($cp);

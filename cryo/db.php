@@ -7,7 +7,6 @@ header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 header("Cache-Control: private",false);
 
 $include = '../include/';
-$include = '../../_include/include/';
 $inc = $include;
 for ($r=0;$r < 10;$r++)
 	{
@@ -16,13 +15,12 @@ for ($r=0;$r < 10;$r++)
 	}
 //-------------------------------------- Paramentros para DEBUG
 //$debug = true;
-ini_set('display_errors', 255);
-ini_set('error_reporting', 255);
-
+ini_set('display_errors', 0);
+ini_set('error_reporting', 0);
 global $user_id,$user_nome,$dd,$user_nivel;
 require($include."sisdoc_char.php");
 require($include.'sisdoc_sql.php');
-
+require($include.'sisdoc_debug.php');
 //-------------------------------------- Paramentros para DEBUG
 $debug = true;
 //ini_set('display_errors', 0);

@@ -1,17 +1,11 @@
 <?
 global $cnn;
 		$base = "mysql";
+		$base_user="cryogene_sa";
 		$base_port = '5432';
 		$base_host="localhost";
 		$base_name="cryogene_base";
-		
-		$base_user="cryogene_sa";
 		$base_pass="448545ct";
-		
-		$base_name="cryogene";
-		$base_user="root";
-		$base_pass="";
-
 		$ftp_img  = 'www.cryogene.inf.br/ic.php?dd99=upload&';
 		$ftp_host = 'ftp.cryogene.org.br';
 //		$ftp_user = 'cryogene';
@@ -19,7 +13,6 @@ global $cnn;
 		$ftp_user = 'root';
 		$ftp_pass = '448545ct';
 		$ftp_path = 'httpdocs/img/ic';
-		$http = 'http://localhost/GitHUB/_include/';
 
 $tit1 = "Criogenia Biológica Ltda.";
 $tit2 = "Rua Olavo Bilac, 524 - Batel - Curitiba - PR - CEP 80.440-040 - Tel: (41) 3014-3009";
