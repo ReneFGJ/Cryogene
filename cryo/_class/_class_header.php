@@ -7,7 +7,9 @@ class header
 		{
 			$sx = '<div id="topmenu" class="menu">
 						<UL class="menu_ul">
-							<LI class="menu_il"><A HREF="#"><img src="img/favicon.ico"></A></LI>
+							<LI class="menu_il">
+								<A HREF="#"><img src="img/favicon.ico"></A>
+							</LI>
 				';
 			$sx .= '
 							<LI class="menu_il"><A HREF="main.php" class="link_menu">HOME</A></LI>
@@ -37,7 +39,12 @@ class header
 						<script  rel="text/javascript" src="js/jquery.js"></script>												
 					</head>
 			<body>';
-			$sx .= $this->topmenu();			
+			$sx .= '<div id="cabs">';
+			$sx .= '<div id="logo">
+					</div>';
+			
+			$sx .= $this->topmenu();
+			$sx .= '</div>';			
 			if ($login != 1)
 				{
 					$sx .= $this->cab_user();

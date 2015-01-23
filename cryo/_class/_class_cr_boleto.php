@@ -42,8 +42,8 @@ class cr_boleto {
 							<TD>Situação';
 			$sx .= '<TR class="tabela01 lt1">';
 			$sx .= '	<TD>'.$line['bol_nosso_numero'];
-			$sx .= '	<TD>'.fmt_data($line['bol_data_processamento']);
-			$sx .= '	<TD>'.fmt_data($line['bol_data_vencimento']);
+			$sx .= '	<TD>'.stodbr($line['bol_data_processamento']);
+			$sx .= '	<TD>'.stodbr($line['bol_data_vencimento']);
 			$sx .= '<TR class="lt0">
 						<TD colspan=3>Sacado
 						<TD>CPF/CNPJ';
@@ -620,7 +620,7 @@ class cr_boleto {
 			$sx .= '<TD align="center">';
 			$sx .= stodbr($line['bol_data_vencimento']);
 			$sx .= '<TD align="center">';
-			$sx .= fmt_data($paga);
+			$sx .= stodbr($paga);
 			$sx .= '<TD align="center"><NOBR>' . $cor;
 			$sx .= $this -> mostra_status($line);
 			$sx .= '</nobr>';

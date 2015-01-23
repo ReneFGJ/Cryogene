@@ -1,12 +1,13 @@
 <?
 ob_start();
 session_start();
-//$include .= '../../include/';
+date_default_timezone_set('UTC');
+
 header("Expires: 0");
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 header("Cache-Control: private",false);
 
-$include = '../include/';
+$include = '../_include/';
 $inc = $include;
 for ($r=0;$r < 10;$r++)
 	{
@@ -26,7 +27,7 @@ $debug = true;
 //ini_set('display_errors', 0);
 //ini_set('error_reporting',7);
 
-//-------------------------------------- Diretï¿½rios de Arquivos e Imagens
+//-------------------------------------- Diretorios de Arquivos e Imagens
 $dir = $_SERVER['DOCUMENT_ROOT'];
 $uploaddir = $dir.'/nep/';
 //-------------------------------------- Leituras das Variaveis dd0 a dd99 (POST/GET)
@@ -35,8 +36,8 @@ for ($k=0;$k < 100;$k++)
 	{
 	$varf='dd'.$k;
 	$varf=$vars[$varf];
-	//if (isset($varf) and ($k > 1)) {	//$varf = str_replace($varf,"A","ï¿½"); }
-	$dd[$k] = troca($varf,"'","Â´");
+	//if (isset($varf) and ($k > 1)) {	//$varf = str_replace($varf,"A",""); }
+	$dd[$k] = troca($varf,"'","´");
 	}
 $acao = $vars['acao'];
 $nocab = $vars['nocab'];
@@ -44,7 +45,7 @@ $nocab = $vars['nocab'];
 $idv = $vars['idioma'];
 //-------------------------------------------- Biblioteca
 $tab_max = '95%';
-$db_config = 'db_cryo.php';
+$db_config = '_db/db_cryo.php';
 
 require($db_config);
 

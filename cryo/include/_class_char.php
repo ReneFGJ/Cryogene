@@ -138,7 +138,7 @@ function fmt($vlr=0,$dec=0)
 		$sx = number_format($vlr,$dec,',','.');
 		return($sx);
 	}
-function fmt_data($data)
+function stodbr($data)
 	{
 		$data = round($data);
 		if ($data < 19100000) { return(""); }

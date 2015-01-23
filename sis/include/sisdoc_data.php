@@ -32,7 +32,7 @@ $date = new date;
 
 $sisdoc_data = True;
 
-function fmt_data($data=0)
+function stodbr($data=0)
 	{
 		return(stodbr($data));
 	}

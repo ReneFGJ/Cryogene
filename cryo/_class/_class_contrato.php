@@ -29,8 +29,8 @@ class contrato
 					$id++;
 					$contrato = $line['ctr_numero'];
 					$status = $line['ctr_status'];
-					$rn = fmt_data($line['ctr_parto_data']);
-					$ass = fmt_data($line['ctr_dt_assinatura']);
+					$rn = stodbr($line['ctr_parto_data']);
+					$ass = stodbr($line['ctr_dt_assinatura']);
 					
 					$sx .= '<input type="radio" name="dd2" value="'.$contrato.'">'.$contrato.' - Nascimento em '.$rn.', contrato assinato em '.$ass.'<BR>';
 				}

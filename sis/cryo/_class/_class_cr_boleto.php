@@ -468,7 +468,7 @@ class cr_boleto
 					$sx .= '<TD align="center">';
 					$sx .= stodbr($line['bol_data_vencimento']);
 					$sx .= '<TD align="center">';
-					$sx .= fmt_data($paga);
+					$sx .= stodbr($paga);
 					$sx .= '<TD align="center"><NOBR>'.$cor;
 					$sx .= $this->mostra_status($line);
 					$sx .= '</nobr>';					
