@@ -4,142 +4,177 @@ class cr_boleto {
 
 	var $sacado;
 	var $sacado_nome;
-	
-	function mostrar_botao_imprimir_boleto($id)
-		{
-			//$onclick = 'onclick="newxy3(\'bb.php?dd0='.$id.'\',700,600);" ';
-			$sx = '<input type="button" name="boleto" id="boleto'.trim($id).'" value="imprimir boleto" '.$onclick.'>';
-			$sx .= '<script>
 
-					$("#boleto'.trim($id).'").click(function() {
-								newxy3(\'bb.php?dd0='.$id.'\',700,600);
+	function insere_boleto($cp, $tabela) {
+		global $dd;
+		$ok = 1;
+		$values = '';
+		$fields = '';
+
+		for ($r = 1; $r < count($cp); $r++) {
+			$fld = $cp[$r][1];
+			$tpf = Substr(UpperCase($cp[$r][0]),0,2);
+			if (strlen($fld) > 0) {
+				if (strlen($fields) > 0) {
+					$fields .= ', ';
+					$values .= ', ';
+				}
+				$fields .= $cp[$r][1];
+				if ($tpf == '$D') 
+					{
+					$values .= "'" . brtos($dd[$r]) . "'"; }
+				else {
+					$values .= "'" . $dd[$r] . "'";	
+				}
+				
+			}
+		}
+
+		$sql = "insert into " . $tabela;
+		$sql .= " ($fields) value ($values) ";
+		$rrr = db_query($sql);
+		return ($ok);
+	}
+
+	function busca_proximo_vencimento($vc, $p) {
+		if ($p == 1) {
+			return ($vc);
+		}
+		$d1 = mktime(0, 0, 0, round(substr($vc, 3, 2)) + ($p - 1), substr($vc, 0, 2), substr($vc, 6, 4));
+		return (date("d/m/Y", $d1));
+	}
+
+	function mostrar_botao_imprimir_boleto($id) {
+		//$onclick = 'onclick="newxy3(\'bb.php?dd0='.$id.'\',700,600);" ';
+		$sx = '<input type="button" name="boleto" id="boleto' . trim($id) . '" value="imprimir boleto" ' . $onclick . '>';
+		$sx .= '<script>
+
+					$("#boleto' . trim($id) . '").click(function() {
+								newxy3(\'bb.php?dd0=' . $id . '\',700,600);
 							});
 					</script>
 			';
-			return($sx);
+		return ($sx);
+	}
+
+	function le($id) {
+		$sql = "select * from " . $this -> tabela . " where id_bol = " . $id;
+		$rlt = db_query($sql);
+		if ($line = db_read($rlt)) {
+			$this -> id = $line['id_bol'];
+			$this -> line = $line;
 		}
-	
-	function le($id)
-		{
-			$sql = "select * from ".$this->tabela." where id_bol = ".$id;
-			$rlt = db_query($sql);
-			if ($line = db_read($rlt))
-				{
-					$this->id = $line['id_bol'];
-					$this->line = $line;
-				}
-			return(1);
-		}
-		
-	function mostra_boleto()
-		{
-			$line = $this->line;
-			$sx = '<table width="100%">';
-			$sx .= '<TR class="lt0">
+		return (1);
+	}
+
+	function mostra_boleto() {
+		$line = $this -> line;
+		$sx = '<table width="100%">';
+		$sx .= '<TR class="lt0">
 							<TD>Nosso Número
 							<TD>Data processamento
 							<TD>Data vencimento
 							<TD>Situação';
-			$sx .= '<TR class="tabela01 lt1">';
-			$sx .= '	<TD>'.$line['bol_nosso_numero'];
-			$sx .= '	<TD>'.stodbr($line['bol_data_processamento']);
-			$sx .= '	<TD>'.stodbr($line['bol_data_vencimento']);
-			$sx .= '<TR class="lt0">
+		$sx .= '<TR class="tabela01 lt1">';
+		$sx .= '	<TD>' . $line['bol_nosso_numero'];
+		$sx .= '	<TD>' . stodbr($line['bol_data_processamento']);
+		$sx .= '	<TD>' . stodbr($line['bol_data_vencimento']);
+		$sx .= '<TR class="lt0">
 						<TD colspan=3>Sacado
 						<TD>CPF/CNPJ';
-			$sx .= '<TR class="tabela01 lt2">';
-			$sx .= '	<TD colspan=3><B>'.trim($line['bol_sacado']).'</B>';
-			$sx .= '	<TD>'.trim($line['bol_cpf_cnpj']);
-			
-			$sx .= '<TR class="lt0">
+		$sx .= '<TR class="tabela01 lt2">';
+		$sx .= '	<TD colspan=3><B>' . trim($line['bol_sacado']) . '</B>';
+		$sx .= '	<TD>' . trim($line['bol_cpf_cnpj']);
+
+		$sx .= '<TR class="lt0">
 							<TD>Valor
 							<TD>Documento
 							<TD colspan=2>Obs';
-			$sx .= '<TR class="tabela01 lt1">';
-			$sx .= '	<TD class="lt2"><B>'.number_format($line['bol_valor_boleto'],2,',','.').'</B>';
-			$sx .= '	<TD>'.trim($line['bol_numero_documento']);
-			$sx .= '	<TD>'.trim($line['bol_obs']);
-			
-			$sx .= '<TR><TD>'.$this->mostrar_botao_imprimir_boleto($this->id);			
-			
-			$sx .= '</table>';
-			return($sx);
-		}
-	
-	function updatex()
-		{
+		$sx .= '<TR class="tabela01 lt1">';
+		$sx .= '	<TD class="lt2"><B>' . number_format($line['bol_valor_boleto'], 2, ',', '.') . '</B>';
+		$sx .= '	<TD>' . trim($line['bol_numero_documento']);
+		$sx .= '	<TD>' . trim($line['bol_obs']);
 
-				global $base;
-				$c = 'bol';
-				$c1 = 'id_'.$c;
-				$c2 = $c.'_nosso_numero';
-				$c3 = 8;
-				$sql = "update ".$this->tabela." set $c2 = lpad($c1,$c3,0) where $c2=''";
-				if ($base=='pgsql') { $sql = "update ".$this->tabela." set $c2 = trim(to_char(id_".$c.",'".strzero(0,$c3)."')) where $c2='' or  $c2 isnull "; }
-				$rlt = db_query($sql);							
+		$sx .= '<TR><TD>' . $this -> mostrar_botao_imprimir_boleto($this -> id);
+
+		$sx .= '</table>';
+		return ($sx);
+	}
+
+	function updatex() {
+
+		global $base;
+		$c = 'bol';
+		$c1 = 'id_' . $c;
+		$c2 = $c . '_nosso_numero';
+		$c3 = 8;
+		$sql = "update " . $this -> tabela . " set $c2 = lpad($c1,$c3,0) where $c2=''";
+		if ($base == 'pgsql') { $sql = "update " . $this -> tabela . " set $c2 = trim(to_char(id_" . $c . ",'" . strzero(0, $c3) . "')) where $c2='' or  $c2 isnull ";
 		}
-	
-	function atualiza_nosso_numero($sacado,$contrato)
-		{
-			$this->updatex();
-			
-			$sql = "select * from cliente
+		$rlt = db_query($sql);
+	}
+
+	function atualiza_nosso_numero($sacado, $contrato) {
+		$this -> updatex();
+
+		$sql = "select * from cliente
 				left join cidade on cl_contato_cidade = c_codigo  
-				where cl_codigo = '".$sacado."' ";
-			$rlt = db_query($sql);
-			if ($line = db_read($rlt))
-				{
-					$rua = trim($line['cl_endereco']);
-					$local = trim($line['cl_bairro']).', CEP:'.trim($line['cl_cep']);
-					$local .= trim($line['c_nome']).'-'.trim($line['c_estado']);
-					
-					$sql = "select * from ".$this->tabela." where bol_endereco = '".($contrato.$sacado)."' ";
-					$xrlt = db_query($sql);
-					$xline = db_read($xrlt);
-					$id = $xline['id_bol'];
-					$this->id = $id;
-					
-					$sql = "update ".$this->tabela." set 
-							bol_sacado = '".trim($line['cl_nome'])."',
-							bol_cpf_cnpj = '".trim($line['cl_cpf'])."',
-							bol_endereco1 = '".$rua."',
-							bol_endereco2 = '".$local."'
-						where id_bol = ".round($id);
-						$rlt = db_query($sql);
-				} else {
-					echo '<font color="red">OPS Sacado inexistente</font>';
-				}
-				/* endereco 1 - local */
-				/* endereco 2 - estado, cep, cidade */
+				where cl_codigo = '" . $sacado . "' ";
+		$rlt = db_query($sql);
+		$to = 0;
+		while ($line = db_read($rlt)) {
+			$to++;
+			$rua = trim($line['cl_endereco']);
+			$local = trim($line['cl_bairro']) . ', CEP:' . trim($line['cl_cep']);
+			$local .= trim($line['c_nome']) . '-' . trim($line['c_estado']);
+
+			$sql = "select * from " . $this -> tabela . " where bol_endereco = '" . ($contrato . $sacado) . "' ";
+			$xrlt = db_query($sql);
+			$xline = db_read($xrlt);
+			$id = $xline['id_bol'];
+			$this -> id = $id;
+
+			$sql = "update " . $this -> tabela . " set 
+							bol_sacado = '" . trim($line['cl_nome']) . "',
+							bol_cpf_cnpj = '" . trim($line['cl_cpf']) . "',
+							bol_endereco1 = '" . $rua . "',
+							bol_endereco2 = '" . $local . "'
+						where id_bol = " . round($id);
+			$qrlt = db_query($sql);
 		}
+		if ($to == 0) {
+			echo '<font color="red">OPS Sacado inexistente</font>';
+		}
+		/* endereco 1 - local */
+		/* endereco 2 - estado, cep, cidade */
+	}
 
 	function cp() {
-		global $dd,$acao;
+		global $dd, $acao;
 		$cp = array();
-		$sql = "SELECT * FROM contrato WHERE `ctr_numero` = '".$dd[2]."' ";
+		$sql = "SELECT * FROM contrato WHERE `ctr_numero` = '" . $dd[2] . "' ";
 		$rlt = db_query($sql);
-		if ($line = db_read($rlt))
-			{
-				$wc = " cl_codigo = '".$line['ctr_responsavel']."' or cl_codigo = '".$line['ctr_pai']."' or cl_codigo = '".$line['ctr_mae']."' ";
-				$sqlc = "select * from cliente where ".$wc." order by cl_nome ";	
-			}
+		if ($line = db_read($rlt)) {
+			$wc = " cl_codigo = '" . $line['ctr_responsavel'] . "' or cl_codigo = '" . $line['ctr_pai'] . "' or cl_codigo = '" . $line['ctr_mae'] . "' ";
+			$sqlc = "select * from cliente where " . $wc . " order by cl_nome ";
+		}
 		array_push($cp, array('$H8', 'id_bol', 'id_bol', False, True, ''));
-		array_push($cp, array('$Q cl_nome:cl_codigo:'.$sqlc, '', 'Sacado', True, True, ''));
+		array_push($cp, array('$Q cl_nome:cl_codigo:' . $sqlc, '', 'Sacado', True, True, ''));
 		array_push($cp, array('$S10', 'bol_contrato', 'Contrato', True, True, ''));
-		array_push($cp, array('$D8', 'bol_data_vencimento', 'Vencimento', True, True, ''));
-		if (strlen($dd[0]) == 0) { array_push($cp, array('$U8', 'bol_data_processamento', '', False, True, '')); }
+		array_push($cp, array('$D8', 'bol_data_vencimento', '<nobr>1º Vencimento</nobr>', True, True, ''));
+		if (strlen($dd[0]) == 0) { array_push($cp, array('$U8', 'bol_data_processamento', '', False, True, ''));
+		}
 		array_push($cp, array('$U8', 'bol_data_documento', '', False, True, ''));
-		
-		
+
 		// dd5
-		array_push($cp, array('$S10', 'bol_valor_boleto', 'Valor Boleto', True, True, ''));
+		array_push($cp, array('$N10', 'bol_valor_boleto', 'Valor Total dos boletos', True, True, ''));
 		array_push($cp, array('$HV', 'bol_aceite', 'S', False, True, ''));
 		array_push($cp, array('$H3', 'bol_especie', '', False, True, ''));
 		array_push($cp, array('$H5', 'bol_especie_doc', 'bol_especie_doc', False, True, ''));
-		array_push($cp, array('$HV', 'bol_endereco', $dd[2].$dd[1], False, True, ''));
-		
+		array_push($cp, array('$HV', 'bol_endereco', $dd[2] . $dd[1], False, True, ''));
+
 		// dd10
-		array_push($cp, array('$S12', 'bol_numero_documento', 'NR. Doc. / Parcela', False, True, ''));
+		array_push($cp, array('$S12', 'bol_numero_documento', 'NR. Doc.', False, True, ''));
 		array_push($cp, array('$H16', 'bol_cpf_cnpj', 'bol_cpf_cnpj', False, True, ''));
 		array_push($cp, array('$H80', '', 'bol_endereco', False, True, ''));
 		array_push($cp, array('$H20', 'bol_cidade', 'bol_cidade', False, True, ''));
@@ -151,13 +186,16 @@ class cr_boleto {
 		array_push($cp, array('$HV', 'bol_tx_boleto', '0', True, True, ''));
 		array_push($cp, array('$T20:6', 'bol_obs', 'Obs', False, True, ''));
 
-
 		$sql = 'select ft_nr from fatura where ft_status=1 and ft_contrato =' . chr(39) . $dd[2] . chr(39) . ' order by ft_nr desc ';
 		array_push($cp, array('$HV', 'bol_status', 'A', False, True, ''));
-		array_push($cp, array('$Q ft_nr:ft_nr:select ft_nr from fatura where ft_status=1 and ft_contrato =' . chr(39) . $dd[2] . chr(39) . ' order by ft_nr desc', 'bol_fatura', 'N. Fatura', True, True, ''));
+		$sqla = " CONCAT(ft_referencia_ano, '-', ft_nr) as ft_dsp ";
+		array_push($cp, array('$Q ft_dsp:ft_nr:select ft_nr, ' . $sqla . ' from fatura where ft_status=1 and ft_contrato =' . chr(39) . $dd[2] . chr(39) . ' order by ft_nr desc', 'bol_fatura', 'N. Fatura', True, True, ''));
 		array_push($cp, array('$HV', 'bol_tipo', 'A', True, True, ''));
-		array_push($cp, array('$HV', 'bol_nosso_numero','', False, True, ''));
-		return($cp);
+		array_push($cp, array('$HV', 'bol_nosso_numero', '', False, True, ''));
+		array_push($cp, array('$[1-12]', '', 'Número de Parcelas', True, True, ''));
+
+		array_push($cp, array('$B8', '', 'Gerar boletos >>>', False, True, ''));
+		return ($cp);
 
 	}
 
@@ -585,7 +623,7 @@ class cr_boleto {
 					<TH>Dt.Liqui.										
 					<TH width="80">Posição';
 		while ($line = db_read($rlt)) {
-			$linkb = '<A HREF="boleto_mostar_resumo.php?dd0='.$line['id_bol'].'" target="_new'.$line['id_bol'].'">';
+			$linkb = '<A HREF="boleto_mostar_resumo.php?dd0=' . $line['id_bol'] . '" target="_new' . $line['id_bol'] . '">';
 			$status = $line['bol_status'];
 			$valor = $line['bol_valor_boleto'];
 			$taxa = $line['bol_tx_boleto'];

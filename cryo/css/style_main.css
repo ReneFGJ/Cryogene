@@ -1,5 +1,36 @@
 @charset "utf-8";
 
+/* Botoes */
+.botao_acao
+	{
+	cursor: pointer;
+	/*border-radius*/
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    color: #FFF;
+    font-weight: bold;
+    font-size: 16px;
+    text-shadow: -1px -1px  3px #666;
+    border: 1px solid #CCC;
+    padding: 15px 20px;
+    background: rgb(98,186,236);
+    background: -moz-linear-gradient(top, rgba(98,186,236,1) 0%, rgba(18,128,211,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(98,186,236,1)), color-stop(100%,rgba(18,128,211,1)));
+    background: -webkit-linear-gradient(top, rgba(98,186,236,1) 0%,rgba(18,128,211,1) 100%);
+    background: -o-linear-gradient(top, rgba(98,186,236,1) 0%,rgba(18,128,211,1) 100%);
+    background: -ms-linear-gradient(top, rgba(98,186,236,1) 0%,rgba(18,128,211,1) 100%);
+    background: linear-gradient(top, rgba(98,186,236,1) 0%,rgba(18,128,211,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#62baec', endColorstr='#1280d3',GradientType=0 );
+    opacity: 0.8;
+	}
+	
+.botao_acao:hover
+	{
+		opacity: 1;
+		
+	}
+
 /* Header */
 
 #cabs {
@@ -120,6 +151,7 @@ html, body {
     height: auto;
     margin: 0 auto;
     border: 0px solid #404040;
+    margin-left: 300px;
     padding: 4px;
     /* background-color: #FEFEFE; */
 }

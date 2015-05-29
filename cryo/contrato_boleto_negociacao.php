@@ -24,6 +24,11 @@ echo '<table width="100%">';
 	echo '<TR valign="top">';
 	echo '<TD width="25%">';
 	echo $ct->mostra_contrato($contratos);
+	
+	echo '<div class="botao_acao">Enviar recordatório por SMS</div>';
+	echo '<BR>';
+	echo '<div class="botao_acao">Enviar recordatório por E-mail</div>';
+	
 	echo '<TD width="2%">&nbsp;';
 	echo '<TD width="73%">';
 

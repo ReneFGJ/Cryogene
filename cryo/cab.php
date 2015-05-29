@@ -1,5 +1,6 @@
 <?php
 require('db.php');
+$tab_max = '98%';
 require($include.'sisdoc_debug.php');
 
 require("_class/_class_login.php");

@@ -22,6 +22,54 @@ class sms
 	var $remetente  = 'CRYOGENE';
 	var $erro;
 	
+	function sms_mostra_erro($cod)
+		{
+			$cod = round($cod);
+			switch ($cod)
+				{
+				case 0:
+					$sx = '<font color="green">Enviado com sucesso</font>';
+					break;
+				case 10:
+					$sx .= 'Conteúdo da mensagem vazio';
+					break;
+				case 12:
+					$sx .= 'Conteúdo muito longo';
+					break;
+				case 13:
+					$sx .= 'Número do destinatário incorreto';
+					break;
+				case 14:
+					$sx .= 'Numero do destinatário em branco';
+					break;
+				case 15:
+					$sx .= 'Data de agendamento incorreta';
+					break;
+				case 16:
+					$sx .= 'Identificador maior que o tamanho permitido';
+					break;
+				case 80:
+					$sx .= 'Identificador do SMS já foi utilizado nas últimas 24 horas.';
+					break;
+				case 141:
+					$sx .= 'A conta não permite o envio de SMS internacional.';
+					break;
+				case 900:
+					$sx .= 'Erro de autenticação. Verifique os parâmetros "account" e "code".';
+					break;
+				case 990:
+					$sx .= 'O limite de créditos de sua conta foi atingido. Contate nosso suporte para verificação/liberação.';
+					break;
+				case 998:
+					$sx .= 'Dispatch incorreto.';
+					break;
+				case 999:
+					$sx .= 'Erro desconhecido';
+					break;
+				}
+			return($sx);
+		}
+	
 	function sms_envia()
 		{
 			$ok = 1;
@@ -52,6 +100,7 @@ class sms
 				id_sms serial NOT NULL,
 				sms_data integer,
 				sms_hora char(8),
+				sms_destino char(15),
 				sms_ip char(15),
 				sms_mensagem text,
 				sms_erro char(2),
@@ -103,19 +152,33 @@ class sms
 			$agendamento    = $this->agendamento;  
 			$mensagem       = $this->mensagem;
 			$identificador  = $this->identificador;                
-			$modoTeste      = $this->modoTeste;             
+			$modoTeste      = $this->modoTeste;
+			
+			/* Retirar espacos da mensagem */
+			$mensagem = troca($mensagem , chr(13),' ');             
+			$mensagem = troca($mensagem , chr(10),' ');
 			
 			///// monta o conteuo do parametro "messages" (nao alterar)
 			$codedMsg       = $remetente."\t".$destinatario."\t".$agendamento."\t".$mensagem."\t".$identificador;
 			
 			$modoTeste = '';
 			///// configura parï¿½metros de conexï¿½o (nï¿½o alterar)
-			$path           = "/3.0/user_message_send.php";
-			$parametros     = $path.'?testmode='.$modoTeste.'&linesep=0&user='.urlencode($usuario).'&pass='.urlencode($senha).'&messages='.urlencode($codedMsg);
-			$url            = "https://cgi2sms.com.br".$parametros;
-								
-			echo $url;
 			
+			$path           = "/GatewayIntegration/msgSms.do";
+			$parametros     = $path.'?'.
+									'dispatch=send&from='.urlencode($usuario).
+									'&from='.urlencode($usuario).
+									'&to=55'.$destinatario.
+									'&schedule='.
+									'&id='.$id.
+									'&callbackOption=0'.
+									'&testmode='.$modoTeste.
+									'&linesep=0'.
+									'&account='.urlencode($usuario).
+									'&code='.urlencode($senha).
+									'&msg='.urlencode($mensagem);
+			$url            = "https://api.zenvia360.com.br".$parametros;
+										
 			///// realiza a conexao
 			curl_setopt($ch, CURLOPT_URL, $url);
 			curl_setopt($ch, CURLOPT_HEADER, 0);
