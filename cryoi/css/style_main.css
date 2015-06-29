@@ -19,6 +19,11 @@ input{
 fieldset,img { 
 	border:0;
 }
+
+.border1
+	{
+		border: 1px solid #505050;
+	}
 .link
 	{
 		color: #202020;
@@ -129,7 +134,11 @@ html, body{
 	{ font-size: 10px; }
 .lt1
 	{ font-size: 12px; }
+a.lt1
+	{ font-size: 12px; }
 .lt2 
+	{ font-size: 14px; }
+a.lt2 
 	{ font-size: 14px; }
 .lt3 
 	{ font-size: 16px; }
@@ -137,7 +146,6 @@ html, body{
 	{ font-size: 20px; }
 .lt5
 	{ font-size: 26px; }
-
 
 .tabela00
    {

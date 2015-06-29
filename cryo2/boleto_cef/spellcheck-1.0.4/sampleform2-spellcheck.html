@@ -1,0 +1,115 @@
+<html>
+<head>
+<title>PHP Spell Check - sample Form</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Language" content="en">
+<script language="JavaScript">
+<!--
+var Spell_Win_Name;
+var Work_Form_Name;
+var Work_Field_Name;
+
+function SpellCheck(form_name,field_name) 
+{
+  //÷åòåíå íà ôîðìàòà âúâ ïðîìåíëèâàòà textform
+  //àêî ôîðìàòà ñå êàçâà: proba 
+  //à ïîëåòî çà ïðîâåðêà å: description_short
+  //ïðàâèëíîòî èçïîëçâàíå òðÿáâà äà áúäå
+  //var textform = self.document.proba.description_short.value;
+  //var textform = self.document["proba"]["description_short"].value;
+  
+  var textform = self.document[form_name][field_name].value;
+  
+  //textform = "dfghfhfghfghfgh";
+  //îáðàòíî çàïèñâàíå â ôîðìàòà
+  //self.document[form_name][field_name].value = "alabala i towa e";
+  //ñúîáùåíèå
+  //alert (textform);
+  
+  //open popup window and submit to spell_check.php ONLY
+  //1. IF popup window is not open or popup window was closed
+  //2. OR click comes from another form-field
+  
+  //otherwise spellcheck click just focus popup window
+  
+  if ( ! Spell_Win_Name || Spell_Win_Name.closed || (Work_Form_Name != form_name || Work_Field_Name != field_name))
+  {
+  Spell_Win_Name = win_pop('');
+  if (Spell_Win_Name.focus) { Spell_Win_Name.focus(); }
+  
+  self.document.hidden_form.form_name.value = form_name; 	//w skritata forma se izpolzwa ime na pole form_name i field_name
+  self.document.hidden_form.field_name.value = field_name;  	// koito nqmat nishto obshto s promrnliwite w tazi funkciq
+  self.document.hidden_form.first_time_text.value = textform;
+  self.document.hidden_form.submit();
+  
+  Work_Form_Name=form_name;
+  Work_Field_Name=field_name;
+  }
+  else
+  {
+  if (Spell_Win_Name.focus) { Spell_Win_Name.focus(); }
+  }
+
+}
+-->
+</script>
+<script type="text/javascript">
+		<!--
+		function win_pop(URL)
+		{	
+    		winname=window.open(URL,'WIN','width=600,height=380,left=210,top=210,resizable=yes,scrollbars=yes,status=yes'); 
+		return winname;
+		}
+		-->
+</script>
+
+</head>	
+<body lang="bg-BG" text="#000000" link="#0000ff" vlink="#000080" alink="#ff0000">
+
+This is sample form demonstrating how to use spell_check.php in your form.
+The script is designed not to mess any way to your main script processing of the form.
+It just return modified (already spell-checked) text into any input field.
+<P>
+
+<FORM name="hidden_form" method="POST" action="spell_check.php?init=yes" target="WIN">
+<INPUT type="hidden" name="form_name" value="">
+<INPUT type="hidden" name="field_name" value="">
+<INPUT type="hidden" name="first_time_text" value="">
+</FORM>
+
+
+<FORM NAME="proba" method="POST" action="freak_where_you_like.php">
+<B>Example of using on textarea:</B><BR>
+	
+<textarea name="description_short" cols="86" rows="10">
+Helo everybody out there using minix -
+I'm doing a (free) operating system (just a hobby, won't be big and
+profesional like gnu) for 386(486) AT clones. This has been brewing
+since april, and is starting to get ready. I'd like any feedback on
+things people like/dislike in minix, as my OS resembles it somewhat
+(same physical layout of the file-system (due to praktical reasons)
+among other things).
+
+....
+Well, never say never... :-)
+
+</textarea>
+<BR>
+<a href="spell_check.php?init=nojs" onclick="javascript:SpellCheck('proba','description_short');return false;">SpellCheck</A>
+
+<P><BR>
+
+<B>Example of using on input field:</B><BR>	
+<INPUT type="text" name="item" size="28" maxlength="38">
+<a href="spell_check.php?init=nojs" onclick="javascript:SpellCheck('proba','item');return false;">SpellCheck</A>
+
+<BR><P><P>
+
+<input name="submit" type="submit" value=" &nbsp; Submit to your main form processing &nbsp; ">
+
+</FORM>
+
+
+</body>
+</html>
+

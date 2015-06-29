@@ -2,7 +2,7 @@
 require("cab.php");
 require('include/sisdoc_colunas.php');
 require('include/sisdoc_data.php');
-require('include/_class_form.php');
+//require('include/_class_form.php');
 
 echo 'ola';
 //@ini_set('unserialize_callback_func', 'spl_autoload_call');

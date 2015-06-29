@@ -23,7 +23,6 @@ $this -> load -> view('header/cab_ajax_loading');
 
 	</div>
 </div>
-<center>
 <div class="versao">v0.15.22</div>
 <BR><BR>
 <div id="content">

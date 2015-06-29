@@ -1,0 +1,240 @@
+<html>
+<head>
+<title>PHP Spell Check for HTML Forms - Textarea Spell Checker</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Language" content="en">
+</head>	
+<body lang="en" bgcolor="#ebebeb" text="#000000" link="#0000ff" vlink="#000080" alink="#ff0000">
+<H1>Simple Easy To Use PHP Spell Checker</H1>
+<h2>General Info:</h2>
+The program is used to spell check any of the input field of the HTML form.
+It is useful for webmasters who want to add spell checking to any text box (textarea) on their website or corporate intranet.
+The script is designed not to mess any way to your main script processing of the form.
+It just return modified (already spell-checked) text into any input field. It is written 
+on PHP and using JavaScript as minimum as possible.<P>
+
+JavaScript code is limited to:
+<UL>
+	<LI>read input field we want to spellcheck
+	<LI>open pop-up window 
+	<LI>passing javascript variable to php, through automatically submitting hidden form to PHP.
+	<LI>passing php variable to javascript and then writing back already spell-checked text into the original form.
+</UL>
+
+<h2>Download:</h2>
+spellcheck-1.2.0.tar.gz - coming soon, will support mixed languages and bulletin boards where mixed
+contents is posted text + code<BR>
+<P>
+<a href='spellcheck-1.0.4.tar.gz'>spellcheck-1.0.4.tar.gz</a> &nbsp;&nbsp;18 May 2006<BR>
+(Main changes: work regardless of register globals  
+and define places should be avoided during checking and preview - avoid HTML, BBcode, pasted Scripts... )<BR>
+<P>
+<a href='spellcheck-1.0.2.tar.gz'>spellcheck-1.0.2.tar.gz</a><BR>
+<a href='spellcheck-1.0.0.tar.gz'>spellcheck-1.0.0.tar.gz</a>
+<h2>Live Demo:</h2>
+<a href='sampleform2-spellcheck.html'>Example Form.<a>
+<h2>How to Install:</h2>
+
+<B>1.Add SpellCheck link</B> nearby entry field. Copy code and <B>change</B> javascript:SpellCheck() 
+according to the <B>name of the form</B> 
+and to the <B>name of the input field</B>.<BR>
+In <B><I>SpellCheck('proba','description_short')</I></B> first var ('proba') is name of the form.<BR>
+and second var 'description_short' is name of the input field
+<textarea cols="120" rows="2">
+<a href="spell_check.php?init=nojs" onclick="javascript:SpellCheck('proba','description_short');return false;">SpellCheck</A>
+</textarea>
+<BR><P>
+
+Example: <BR>
+name of the form is:<B>user_form</B><BR>
+name of the input field is:<B>comment</B><BR>
+
+<PRE>
+&lt;FORM NAME="user_form" method="POST" action="somewhere.php"&gt;
+&lt;textarea name="comment"&gt;
+&lt;/textarea&gt;&lt;BR&gt;
+
+&lt;a href="spell_check.php?init=nojs" onclick="javascript:SpellCheck('user_form','comment');return false;"&gt;SpellCheck&lt;/A&gt;
+
+&lt;input name="submit" type="submit" value="Submit"&gt;
+&lt;/FORM&gt;
+
+
+</PRE>
+
+You may add spellcheck links not only on one input field, but on every field used in form. If
+your page contains multiple forms you can add spellchecking on them as well. Parameters
+passing to JS function SpellCheck() are needed by spell_check.php. The script(php) must know original place (form-field name) where to return the corrected text.
+<P>
+<B>2.Copy the following JS code </B>into the <B>&lt;head&gt;</B> <B>&lt;/head&gt;</B> area of page where your form reside:<BR>
+
+<textarea cols="120" rows="35">
+
+<script language="JavaScript">
+<!--
+var Spell_Win_Name;
+var Work_Form_Name;
+var Work_Field_Name;
+
+function SpellCheck(form_name,field_name) 
+{
+  //÷åòåíå íà ôîðìàòà âúâ ïðîìåíëèâàòà textform
+  //àêî ôîðìàòà ñå êàçâà: proba 
+  //à ïîëåòî çà ïðîâåðêà å: description_short
+  //ïðàâèëíîòî èçïîëçâàíå òðÿáâà äà áúäå
+  //var textform = self.document.proba.description_short.value;
+  //var textform = self.document["proba"]["description_short"].value;
+  
+  var textform = self.document[form_name][field_name].value;
+  
+  //textform = "dfghfhfghfghfgh";
+  //îáðàòíî çàïèñâàíå â ôîðìàòà
+  //self.document[form_name][field_name].value = "alabala i towa e";
+  //ñúîáùåíèå
+  //alert (textform);
+  
+  //open popup window and submit to spell_check.php ONLY
+  //1. IF popup window is not open or popup window was closed
+  //2. OR click comes from another form-field
+  
+  //otherwise spellcheck click just focus popup window
+  
+  if ( ! Spell_Win_Name || Spell_Win_Name.closed || (Work_Form_Name != form_name || Work_Field_Name != field_name))
+  {
+  Spell_Win_Name = win_pop('');
+  if (Spell_Win_Name.focus) { Spell_Win_Name.focus(); }
+  
+  self.document.hidden_form.form_name.value = form_name; 	//w skritata forma se izpolzwa ime na pole form_name i field_name
+  self.document.hidden_form.field_name.value = field_name;  	// koito nqmat nishto obshto s promrnliwite w tazi funkciq
+  self.document.hidden_form.first_time_text.value = textform;
+  self.document.hidden_form.submit();
+  
+  Work_Form_Name=form_name;
+  Work_Field_Name=field_name;
+  }
+  else
+  {
+  if (Spell_Win_Name.focus) { Spell_Win_Name.focus(); }
+  }
+
+}
+-->
+</script>
+<script type="text/javascript">
+		<!--
+		function win_pop(URL)
+		{	
+    		winname=window.open(URL,'WIN','width=600,height=380,left=210,top=210,resizable=yes,scrollbars=yes,status=yes'); 
+		return winname;
+		}
+		-->
+</script>
+
+</textarea>
+<P>
+<B>3.Copy the following HTML code </B>in the page where your form reside:
+<textarea cols="120" rows="5">
+<FORM name="hidden_form" method="POST" action="spell_check.php?init=yes" target="WIN">
+<INPUT type="hidden" name="form_name" value="">
+<INPUT type="hidden" name="field_name" value="">
+<INPUT type="hidden" name="first_time_text" value="">
+</FORM>
+</textarea>
+<P>
+
+<B>4. Final Steps:</B><BR>
+spell_check.php must reside in the same directory where your form is. If you copy in other dir, please
+change the path to the script in: <BR>
+<I>(a).hidden_form:</I> &lt;FORM name="hidden_form" method="POST"action="path_to_the_script/spell_check.php?init=yes"<BR>
+and in<BR>
+<I>(b).spellcheck link:</I> &lt;a href="path_to_the_script/spell_check.php?init=nojs" onclick="javascript:SpellCheck( ....<BR>
+Spelling of other language (not English) is also possible if it is aspell supported. To do this change the line <B>$int = pspell_new('en');</B> with appropriate letter
+(<a href='http://www.php.net/manual/en/function.pspell-new.php'>function.pspell-new</a>).
+If you have any difficulties during the install and config I can offer free assistance via e-mail (or ICQ: 121014338 please write some 'spell check' words to the authorization subject). Any suggestions are welcome.
+
+ 
+
+<h2>Requirements:</h2>
+0.register_globals set ON (sorry) <a href='http://www.php.net/register_globals'>http://www.php.net/register_globals</A>; &nbsp;
+<a href='http://www.karakas-online.de/EN-Book/change-php-parameters.html'>How to change PHP parameters when you don't have access to php.ini</a><BR>
+1.aspell with appropriate dictionary<BR>
+2.PHP with pspell compiled in<BR>
+<BR>
+
+Check the output of phpinfo();<BR>
+<B>
+&lt;?php<BR>
+phpinfo();<BR>
+?&gt;<BR>
+</B>
+If all is OK you can see somewhere in the top:<BR>
+ '--with-pspell'<BR>
+if not, you must recompile PHP add the line --with-pspell to ./configure<BR>
+Note that pspell is not enabled by default in ./configure<BR>
+Personally this is my configure:<BR>
+<PRE>
+./configure --with-apxs2 --prefix=/usr --with-config-file-path=/etc --with-config-file-scan-dir=/etc/php.d --disable-cgi --enable-bcmath --with-pspell 
+</PRE>
+
+If you using RedHat/Fedora all this is set by default.<BR>
+<BR>
+Check the installation:<BR>
+<PRE>rpm -qa | grep aspell</PRE>
+
+output:	<BR>
+	aspell-devel-0.33.7.1-21<BR>
+	aspell-en-gb-0.33.7.1-21<BR>
+	aspell-0.33.7.1-21<BR>
+and<BR>
+<PRE>rpm -qa | grep pspell</PRE>
+output:	<BR>
+	pspell-0.12.2-16<BR>
+	pspell-devel-0.12.2-16<BR>
+
+<h2>Bugs:</h2>
+1.probably<BR>
+2.probably Browsers incompatibility<BR>
+3.correct my English<BR>
+4.life it self<BR>
+<P>
+
+Please report success,bugs at E-mail: <B>naka</B> (at) <B>1001Line</B> dot <B>net</B>
+
+<P>
+<!--Top100categories counter-->
+<script language="JavaScript"><!--
+document.write('<a href="http://www.top100categories.com/Internet/Webmaster_Resources/" target=_blank title="Webmaster Targeted"><img src="http://www.top100categories.com/engine/?9548&r=' + escape(document.referrer) + '&pg=' + escape(window.location.href) + '&n=07' + ( (typeof(screen)=='undefined')?'':'&wh='+screen.width+'x'+screen.height+'&px='+(screen.colorDepth? screen.colorDepth:screen.pixelDepth)) + ' alt="Webmaster Targeted" width=88 height=31 border=0></a>')//-->
+</script>
+<!--/Top100categories counter-->
+
+
+<!--Topnemo counter-->
+
+<!--/Topnemo counter-->
+
+
+<hr>
+Simple, Easy to Use spell_check.php<BR> 
+Copyright (C) 2005 by Naka Gadjov<br>
+Design and Information <a href='http://www.1001line.net'>www.1001line.net<a><BR>
+The project is sponsored by <a href='http://www.1001line.com'>Trakia Real Estate<a> and is used 
+heavily during the database translation of <a href='http://real-estate.1001line.com'>the English version<a> of the site.<P><BR>
+
+<B>If you like this script</B>, place a link to www.1001line.com on <B>your website.</B><BR>
+<textarea cols="90" rows="2">
+<a href="http://www.1001line.com/" target="_blank">PHP Spell Checker<a>
+</textarea>
+<BR>
+<B>OR to this page</B><BR>
+<textarea cols="90" rows="2">
+<a href="http://www.1001line.net/spell-check/" target="_blank">PHP Spell Checker<a>
+</textarea>
+
+<BR>
+This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome
+to redistribute it under certain conditions; please refer to the 
+<B>GNU General Public License</B> for details.
+
+</body>
+</html>
+
