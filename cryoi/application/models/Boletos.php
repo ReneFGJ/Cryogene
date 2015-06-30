@@ -14,9 +14,12 @@ class boletos extends CI_Model {
 		echo $msg;
 		echo '<HR>';
 
-		$sql = "select * from cr_boleto where (bol_auto='S' and bol_status='A') ";
+		$sql = "select * from cr_boleto";
 		//$sql .= " or (bol_data_vencimento = 'venc' and bol_valor_boleto > 1 ";
-		$sql .= " and bol_data_processamento > 20120115 ";
+		$sql .= " inner join contrato on bol_contrato = ctr_numero ";
+		$sql .= " inner join cliente on ctr_responsavel = cl_codigo 
+					left join coleta on col_contrato = bol_contrato ";
+		$sql .= "  where (bol_auto='S' and bol_status='A') and bol_data_processamento > 20120115 ";
 		$sql .= " order by bol_contrato, bol_data_vencimento ";
 		$rlt = $this -> db -> query($sql);
 		$rlt = $rlt -> result_array();
@@ -25,8 +28,8 @@ class boletos extends CI_Model {
 		$xcont = '';
 		$parc = '';
 		$fim = 0;
+		$valor = 0;
 		for ($r = 0; $r <= count($rlt); $r++) {
-
 			if (isset($rlt[$r])) {
 				$line = $rlt[$r];
 				$contrato = $line['bol_contrato'];
@@ -37,11 +40,19 @@ class boletos extends CI_Model {
 			if ($xcont != $contrato) {
 				if (strlen($parc) > 0) {
 					echo '<table class="tabela01" width="100%">' . $parc . '</table>';
-					echo '<HR>';
+					$rn_nome = trim($line['col_rn_nome']);
+					$texto = $msg;
+					$texto = troca($texto,'$RN',$rn_nome);
+					$texto = troca($texto,'$DT_NASC',stodbr($line['ctr_data_coleta']));
+					$texto = troca($texto,'$valor',number_format($valor,2,',','.'));
+					$texto = troca($texto,'$boleto','<table class="tabela01" width="100%">' . $parc . '</table>');
+					echo $texto;
+					exit;
 				}
 				$xcont = $contrato;
 				$parc = '';
 			}
+			$valor = $valor + $line['bol_valor_boleto'];
 			if ($fim == 0) {
 				$parc .= $this -> mostra_boleto($line);
 			}

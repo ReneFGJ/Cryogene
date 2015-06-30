@@ -8,7 +8,7 @@ $this -> load -> view('header/cab_ajax_loading');
 		<img src="<?php echo base_url('img/logo_cryo.png');?>" id="logotype" >
 		<UL class="nav_menu">
 			<LI>
-				<a href="<?php echo base_url('home');?>">
+				<a href="<?php echo base_url('');?>">
 					<img src="<?php echo base_url('/img/icone_menu.png');?>" border=0 height="20" title="main menu">
 			</LI>
 		</UL>
