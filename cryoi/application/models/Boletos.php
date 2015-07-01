@@ -10,16 +10,15 @@ class boletos extends CI_Model {
 		$line = $rlt[0];
 		$msg = ($line['nw_descricao']);
 		$msg = mst($msg);
-		echo '<table width="800" align="right"><tr><td>';
-		echo $msg;
-		echo '<HR>';
 
-		$sql = "select * from cr_boleto";
+		$sql = "select distinct bol_contrato, bol_data_vencimento, col_rn_nome, ctr_data_coleta, bol_valor_boleto from cr_boleto";
 		//$sql .= " or (bol_data_vencimento = 'venc' and bol_valor_boleto > 1 ";
 		$sql .= " inner join contrato on bol_contrato = ctr_numero ";
 		$sql .= " inner join cliente on ctr_responsavel = cl_codigo 
 					left join coleta on col_contrato = bol_contrato ";
-		$sql .= "  where (bol_auto='S' and bol_status='A') and bol_data_processamento > 20120115 ";
+		$sql .= "  where (bol_auto='S' and bol_status='A')
+						and bol_especie = 'REA' 
+						and bol_data_processamento > 20150115 ";
 		$sql .= " order by bol_contrato, bol_data_vencimento ";
 		$rlt = $this -> db -> query($sql);
 		$rlt = $rlt -> result_array();
@@ -29,49 +28,95 @@ class boletos extends CI_Model {
 		$parc = '';
 		$fim = 0;
 		$valor = 0;
-		for ($r = 0; $r <= count($rlt); $r++) {
-			if (isset($rlt[$r])) {
-				$line = $rlt[$r];
-				$contrato = $line['bol_contrato'];
-			} else {
-				$contrato = 'FIM';
-				$fim = 1;
-			}
-			if ($xcont != $contrato) {
-				if (strlen($parc) > 0) {
-					echo '<table class="tabela01" width="100%">' . $parc . '</table>';
-					$rn_nome = trim($line['col_rn_nome']);
-					$texto = $msg;
-					$texto = troca($texto,'$RN',$rn_nome);
-					$texto = troca($texto,'$DT_NASC',stodbr($line['ctr_data_coleta']));
-					$texto = troca($texto,'$valor',number_format($valor,2,',','.'));
-					$texto = troca($texto,'$boleto','<table class="tabela01" width="100%">' . $parc . '</table>');
-					echo $texto;
-					exit;
+		$vencimento = '';
+		for ($r = 0; $r < count($rlt); $r++) {
+			$line = $rlt[$r];
+			$contrato = $line['bol_contrato'];
+			$vencimento = $line['bol_data_vencimento'];
+			$rn_nome = trim($line['col_rn_nome']);
+
+			$parcelas = '<table class="tabela01" width="100%">
+								<tr><th>vencimento</th>
+								<th>ação</th>
+								<th>valor</th>
+								<th>histórico</th>
+								<th>nº boleto</th>
+								<th>nº contrato</th>
+								</tr>';
+			$sql = "select * from cr_boleto 
+						where (bol_auto='S' and bol_status='A') and bol_especie = 'REA'
+							and bol_contrato = '$contrato' ";
+			$rrr = $this->db->query($sql);
+			$rrr = $rrr->result_array();
+			$valor = 0;
+			for ($t=0;$t < count($rrr);$t++)
+				{
+					$ln = $rrr[$t];
+					$valor = $valor + $ln['bol_valor_boleto'] - $ln['bol_tx_boleto'];
+					$parcelas .= $this->mostra_boleto($ln);
 				}
-				$xcont = $contrato;
-				$parc = '';
-			}
-			$valor = $valor + $line['bol_valor_boleto'];
-			if ($fim == 0) {
-				$parc .= $this -> mostra_boleto($line);
-			}
+			$parcelas .= '</table>';
+			
+			$texto = $msg;
+			echo '<BR>'.$contrato.' ';
+			$texto = troca($texto, '$RN', $rn_nome);
+			echo '1';
+			$texto = troca($texto, '$DT_NASC', stodbr($line['ctr_data_coleta']));
+			echo '2';
+			$texto = troca($texto, '$contrato', $contrato);
+			echo '3';
+			$texto = troca($texto, '$valor', number_format($valor, 2, ',', '.'));
+			echo '4';
+			$texto = troca($texto, '$boleto', $parcelas);
+			echo '5';
+			$texto = troca($texto, '$dia_vencimento', substr($vencimento, 6, 2));
+			echo '6';
+			$texto = troca($texto, '$mes_vencimento', meses(substr($vencimento, 4, 2)));
+			echo '7';
+			$texto = troca($texto, '$ano_vencimento', substr($vencimento, 0, 4));
+			echo '8';
+			$valor = 0;
+			
+			echo ' - gravado!';
+			$this -> salve_envio_comunicacao($contrato, 'Anuidade - ' . date("Y"), $texto, 'ANU');
 		}
-		echo '</table>';
 		return (1);
+	}
+
+	function salve_envio_comunicacao($contrato, $subject, $texto, $tipo) {
+		$data = date("Ymd");
+		$hora = date("H:i:s");
+		$sql = "select * from contrato_message where rp_contrato = '$contrato' and rp_data = $data and rp_tipo = '$tipo' ";
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
+
+		if (count($rlt) == 0) {
+			$sql = "insert into contrato_message
+					(
+					rp_contrato, rp_status, rp_data,
+					rp_hora, rp_texto, rp_envio_data,
+					rp_envio_hora, rp_tipo, rp_subject
+					) values (
+					'$contrato','@','$data',
+					'$hora','$texto','19000101',
+					'','$tipo', '$subject'
+					)
+			";
+			$this -> db -> query($sql);
+		}
 	}
 
 	function mostra_boleto($line) {
 		$link = '<A HREF="http://www.cryogene.inf.br/bb.php?dd0=' . $line['id_bol'] . '" target="_new">';
 		$sx = '<tr>';
-		$sx .= '<td>';
+		$sx .= '<td align="center">';
 		$sx .= stodbr($line['bol_data_vencimento']);
 		$sx .= '</td>';
-		$sx .= '<td>';
+		$sx .= '<td align="center">';
 		$sx .= $link . 'Imprimir boleto</A>';
 		$sx .= '</td>';
-		$sx .= '<td>' . number_format($line['bol_valor_boleto'] + $line['bol_tx_boleto'], 2, ',', '.') . '</td>';
-		$sx .= '<td>' . $line['bol_numero_documento'] . '</td>';
+		$sx .= '<td align="right">' . number_format($line['bol_valor_boleto'] + $line['bol_tx_boleto'], 2, ',', '.') . '</td>';
+		$sx .= '<td align="center">' . $line['bol_numero_documento'] . '</td>';
 		$sx .= '<td align="center">' . $line['bol_nosso_numero'] . '</td>';
 		$sx .= '<td align="center">' . $line['bol_contrato'] . '</td>';
 		$sx .= '</tr>';
