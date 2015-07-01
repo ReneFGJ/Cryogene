@@ -1,5 +1,5 @@
 <?php
-$rn_nome = 'André';
+$rn_nome = $col_rn_nome;
 $color_st = '#EEEEEE';
 if ($ctr_status == 'N') 
 	{

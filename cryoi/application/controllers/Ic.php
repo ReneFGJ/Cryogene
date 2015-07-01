@@ -39,6 +39,15 @@ class ic extends CI_Controller {
 		$this -> load -> view('content', $tela);
 	}
 	
+	function sendmail()
+		{
+			$this -> load -> view('header/cab.php');
+			$this -> load -> model('emails');
+			
+			$this->emails->enviar_cache();
+			
+		}
+	
 	function view($id = 0, $check = '') {
 		/* Load Models */
 		$this -> load -> model('ics');

@@ -24,7 +24,9 @@ class contratos extends CI_model
 	function le($id)
 		{
 			$sql = "select * 
-						from contrato where ctr_numero = '".$id."' ";
+						from contrato 
+						left join coleta on ctr_numero = col_contrato
+						where ctr_numero = '".$id."' ";
 						
 			$rlt = $this->db->query($sql);
 			$rlt = $rlt->result_array();

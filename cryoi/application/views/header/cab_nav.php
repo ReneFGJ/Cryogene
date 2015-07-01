@@ -47,9 +47,8 @@ $link['04'] = base_url('index.php/contas_receber/razao_boleto');
 		<li>
 			<a href="#">About</a>
 		</li>
-
 		<li>
-			<a href="#">Contabilidade</a>
+			<a href="<?php echo base_url('index.php/ic/sendmail');?>">Enviar e-mail</a>
 		</li>
 
 	</ul>

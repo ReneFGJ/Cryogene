@@ -12,6 +12,7 @@ $DadosArmazenamento = '<h2>Resumo 6</h2>';
 	<li><a href="#" id="DR3">Coleta</a></li>
 	<li><a href="#" id="DR4">Processamento</a></li>
 	<li><a href="#" id="DR5">Armazenamento</a></li>
+	<li><a href="#" id="DR6">Mensagens</a></li>
 </ul>
 <div id="DadosContent">
 	<div id="DR1a"><?php echo $DadosResumo; ?></div>
@@ -19,6 +20,7 @@ $DadosArmazenamento = '<h2>Resumo 6</h2>';
 	<div id="DR3a" style="display: none;"><?php $this->view('contrato_coleta'); ?></div>
 	<div id="DR4a" style="display: none;"><?php $this->view('contrato_processamento'); ?></div>
 	<div id="DR5a" style="display: none;"><?php echo $DadosArmazenamento; ?></div>
+	<div id="DR6a" style="display: none;"><?php $this->load->view('contrato_message'); ?></div>
 </div>
 </nav>
 
@@ -29,6 +31,7 @@ $DadosArmazenamento = '<h2>Resumo 6</h2>';
 		$("#DR3a").hide();
 		$("#DR4a").hide();
 		$("#DR5a").hide();
+		$("#DR6a").hide();
 	});
 	$("#DR2").click(function() {
 		$("#DR1a").hide();
@@ -36,6 +39,7 @@ $DadosArmazenamento = '<h2>Resumo 6</h2>';
 		$("#DR3a").hide();
 		$("#DR4a").hide();
 		$("#DR5a").hide();
+		$("#DR6a").hide();
 	});
 	$("#DR3").click(function() {
 		$("#DR1a").hide();
@@ -43,6 +47,7 @@ $DadosArmazenamento = '<h2>Resumo 6</h2>';
 		$("#DR3a").show();
 		$("#DR4a").hide();
 		$("#DR5a").hide();
+		$("#DR6a").hide();
 	});
 	$("#DR4").click(function() {
 		$("#DR1a").hide();
@@ -50,5 +55,22 @@ $DadosArmazenamento = '<h2>Resumo 6</h2>';
 		$("#DR3a").hide();
 		$("#DR4a").show();
 		$("#DR5a").hide();
-	});		 
+		$("#DR6a").hide();
+	});
+	$("#DR5").click(function() {
+		$("#DR1a").hide();
+		$("#DR2a").hide();
+		$("#DR3a").hide();
+		$("#DR4a").show();
+		$("#DR5a").hide();
+		$("#DR6a").hide();
+	});		
+	$("#DR6").click(function() {
+		$("#DR1a").hide();
+		$("#DR2a").hide();
+		$("#DR3a").hide();
+		$("#DR4a").hide();
+		$("#DR5a").hide();
+		$("#DR6a").show();
+	});				 
 </script>
