@@ -3,23 +3,48 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Welcome extends CI_Controller {
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see http://codeigniter.com/user_guide/general/urls.html
-	 */
+	function __construct() {
+		global $db_public;
+
+		parent::__construct();
+		$this -> load -> helper('url');
+		$this -> load -> database();
+		$this -> load -> helper('form');
+		$this -> load -> helper('form_sisdoc');		
+
+	}
+	
 	public function index()
 	{
-		$this->load->view('welcome_message');
+		global $dd;
+		$this->load->model('clientes');
+		form_sisdoc_getpost();
+		$this->load->view('header/header');
+		$this->load->view('header/cab_client');
+		$cp = array();
+		array_push($cp,array('$H8','','',False,False));
+		array_push($cp,array('$M','','Informe CPF do pai ou da mãe',True,True));
+		array_push($cp,array('$S12','','&nbsp;',True,True));
+		array_push($cp,array('$M','','Informe a data de nascimento do Bebê',True,True));
+		array_push($cp,array('$D8','','&nbsp;',True,True));
+		array_push($cp,array('$B8','','Entrar',True,True));
+		
+		$form = new form;
+		$data['form'] = $form->editar($cp,'');
+		
+		/* Busca cliente */
+		if ($this->clientes->busca_cliente_cpf($dd[2]) > 0)
+			{
+				$data = $this->clientes->line;
+				$cliente = $data['cl_cliente'];
+			} else {
+				$cliente = 'xxxxxxx';
+			}
+		
+		
+		$sql = "select * from ctr_data_coleta = '".brtos($dd[4])."' and (ctr_pai = '$cliente')";
+		echo $sql;
+		
+		$this->load->view('welcome_message',$data);
 	}
 }

@@ -7,7 +7,9 @@ class emails extends CI_model {
 			$sql = "select * from contrato_message
 						inner join contrato on rp_contrato = ctr_numero
 						inner join cliente on cl_codigo = ctr_responsavel 
-						where rp_status = '@' limit 1";
+						where rp_status = '@'
+						order by rp_data
+						limit 1";
 						
 			$rlt = $this->db->query($sql);
 			$rlt = $rlt->result_array();
@@ -63,7 +65,7 @@ class emails extends CI_model {
 			{
 				$this->email->cc($email_to_alt);
 			}
-		$this -> email -> bcc('info@cryogene.inf.br, renefgj@gmail.com');
+		$this -> email -> bcc('info@cryogene.inf.br');
 
 		$this -> email -> subject($email_subject.' - '.$nome);
 		$this -> email -> message($email_message);
