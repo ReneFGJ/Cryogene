@@ -2,74 +2,12 @@
 class emails extends CI_model {
 	var $to = array();
 	
-	function email_para_enviar()
-		{
-			$sql = "select * from contrato_message
-						inner join contrato on rp_contrato = ctr_numero
-						inner join cliente on cl_codigo = ctr_responsavel 
-						
-						left join (
-						select bol_contrato, max(bol_data_vencimento) as venc from cr_boleto where bol_status = 'A' group by bol_contrato  
-						) as tabela on bol_contrato = rp_contrato
-						where contrato_message.rp_status = '@'
-						order by venc, contrato_message.rp_data";
-						
-			$rlt = $this->db->query($sql);
-			$rlt = $rlt->result_array();
-			$sx = '<table width="100%" class="tabela01">';
-			$tot =0;
-			for ($r=0;$r < count($rlt);$r++)
-				{
-					$line = $rlt[$r];
-					
-					$link = '<a href="'.base_url('index.php/ic/row/'.$line['id_rp'].'/DEL').'">remover</a>';
-					
-					$venc = $line['venc'];
-					if ($venc < date("Ymd"))
-						{
-							$sql = "update contrato_message set rp_status = 'Z' where id_rp = ".$line['id_rp'];
-							$this->db->query($sql);
-						}
-					
-					$tot++;
-					$sx .= '<tr>';
-					$sx .= '<td>';
-					$sx .= $line['rp_contrato'];
-					$sx .= '</td>';					
-					$sx .= '<td>';
-					$sx .= stodbr($line['venc']);
-					$sx .= '</td>';					
-					$sx .= '<td>';
-					$sx .= $line['rp_data'];
-					$sx .= '</td>';
-					$sx .= '<td>';
-					$sx .= $line['rp_hora'];
-					$sx .= '</td>';
-					$sx .= '<td>';
-					$sx .= $line['rp_subject'];
-					$sx .= '</td>';
-					$sx .= '<td>';
-					$sx .= $line['ctr_responsavel_nome'];
-					$sx .= '</td>';
-					
-					$sx .= '<td>';
-					$sx .= $link;
-					$sx .= '</td>';
-					
-				}	
-			$sx .= '<tr><td colspan=10>Total '.$tot.'</td></tr>';
-			$sx .= '</table>';
-			return($sx);		
-		}
-	
 	function enviar_cache()
 		{
 			$sql = "select * from contrato_message
 						inner join contrato on rp_contrato = ctr_numero
 						inner join cliente on cl_codigo = ctr_responsavel 
-						where contrato_message.rp_status = '@'
-						order by contrato_message.rp_data desc
-						limit 1";
+						where rp_status = '@' order by id_rp limit 1";
 						
 			$rlt = $this->db->query($sql);
 			$rlt = $rlt->result_array();
@@ -97,7 +35,6 @@ class emails extends CI_model {
 								rp_envio_data = ".date("Ymd").",
 								rp_envio_hora = '".date("H:i:s")."'
 							where id_rp = ".$idrp;
-					echo $sql;
 					$this->db->query($sql);
 				}
 		}
@@ -126,7 +63,7 @@ class emails extends CI_model {
 			{
 				$this->email->cc($email_to_alt);
 			}
-		$this -> email -> bcc('info@cryogene.inf.br');
+		$this -> email -> bcc('info@cryogene.inf.br, renefgj@gmail.com');
 
 		$this -> email -> subject($email_subject.' - '.$nome);
 		$this -> email -> message($email_message);
