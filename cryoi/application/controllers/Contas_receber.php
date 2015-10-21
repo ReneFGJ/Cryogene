@@ -54,9 +54,7 @@ class contas_receber extends CI_Controller {
 				$data['to'] = 'renefgj@gmail.com';#
 				$data['subject'] = 'Resumo das Anuidades '.$id;
 				$data['message'] = $data['content'];
-				$this->emails->enviar_email($data);
-				
-				
+				$this->emails->enviar_email($data);				
 				return('');
 			}
 		

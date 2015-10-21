@@ -123,9 +123,14 @@ class boletos extends CI_Model {
 		return ($sx);
 	}
 
-	function inserir_boleto($obj) {
+	function inserir_boleto($obj,$desconto=1) {
 		$contrato = $obj['contrato'];
 		$venc = $obj['vencimento'];
+		$venc2 = 19000101;
+		if ($desconto==1)
+			{
+				$venc2 = $obj['vencimento'];
+				}
 		$data = date("Ymd");
 		$valor = $obj['valor'];
 		$taxa = 0;
@@ -179,7 +184,7 @@ class boletos extends CI_Model {
 				'','$sacado','N',
 				19000101,'S','$tipo',
 				
-				19000101,'',0,				
+				$venc2,'',0,				
 				0,19000101,
 				0,19000101
 				)";
