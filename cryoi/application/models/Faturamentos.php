@@ -56,11 +56,13 @@ class faturamentos extends CI_model {
 				$valor_total = $obj['valor_total'];
 				$valor = (int)($valor_total / $parcelas * 10);
 				$valor = $valor / 10;
-
+				$desconto = 0;
+				if ($parcelas == 1) { $desconto = 1; }
+				
 				for ($rc = 1; $rc <= $parcelas; $rc++) {
 					$obj['valor'] = $valor;
 					$obj['documento'] = 'Aunidade ' . $rc . '/' . $obj['parcelas'];
-					$ok = $this -> boletos -> inserir_boleto($obj);
+					$ok = $this -> boletos -> inserir_boleto($obj, $desconto);
 					$sx .= '<tr>
 									<td>' . $obj['contrato'] . '</td>
 									<td>' . $obj['resp_nome'] . '</td>
