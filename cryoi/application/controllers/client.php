@@ -1,6 +1,5 @@
 <?php
-class client extends CI_Controller
-	{
+class client extends CI_Controller {
 	function __construct() {
 		global $db_public;
 
@@ -14,15 +13,16 @@ class client extends CI_Controller
 		$this -> load -> library('session');
 		//$this -> lang -> load("app", "portuguese");
 	}
-				function index() {
+
+	function index() {
 		$this -> load -> view('header/cab.php');
-		$this->load->view('header/cab_nav_client');
-		
-		for ($r=0;$r < 1;$r++)
-			{
-				$data = array();
-				$this->load->view('client/contrato_mini',$data);
-			}
+		$this -> load -> view('header/cab_nav_client');
+
+		for ($r = 0; $r < 1; $r++) {
+			$data = array();
+			$this -> load -> view('client/contrato_mini', $data);
+		}
 	}
-	}
+
+}
 ?>

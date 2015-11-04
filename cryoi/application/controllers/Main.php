@@ -16,7 +16,6 @@ class main extends CI_Controller {
 
 	function index() {
 		$this -> load -> view('header/cab.php');
-		$this->load->view('header/cab_nav');
 		
 		$this->load->view('forms/search_form');
 	}

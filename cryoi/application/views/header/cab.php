@@ -20,9 +20,13 @@ $this -> load -> view('header/cab_ajax_loading');
 			<BR>
 			<BR>
 		</div>
-
+		<br><br>
+		<?php
+		$this->load->view("header/cab_nav");
+		?>
+		
 	</div>
 </div>
-<div class="versao">v0.15.22</div>
+<div class="versao">v0.15.45</div>
 <BR><BR>
 <div id="content">

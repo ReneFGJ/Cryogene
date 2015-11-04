@@ -60,24 +60,15 @@ class boletos extends CI_Model {
 			$texto = $msg;
 			echo '<BR>'.$contrato.' ';
 			$texto = troca($texto, '$RN', $rn_nome);
-			echo '1';
 			$texto = troca($texto, '$DT_NASC', stodbr($line['ctr_data_coleta']));
-			echo '2';
 			$texto = troca($texto, '$contrato', $contrato);
-			echo '3';
 			$texto = troca($texto, '$valor', number_format($valor, 2, ',', '.'));
-			echo '4';
 			$texto = troca($texto, '$boleto', $parcelas);
-			echo '5';
 			$texto = troca($texto, '$dia_vencimento', substr($vencimento, 6, 2));
-			echo '6';
 			$texto = troca($texto, '$mes_vencimento', meses(substr($vencimento, 4, 2)));
-			echo '7';
 			$texto = troca($texto, '$ano_vencimento', substr($vencimento, 0, 4));
-			echo '8';
 			$valor = 0;
 			
-			echo ' - gravado!';
 			$this -> salve_envio_comunicacao($contrato, 'Anuidade - ' . date("Y"), $texto, 'ANU');
 		}
 		return (1);
@@ -129,8 +120,8 @@ class boletos extends CI_Model {
 		$venc2 = 19000101;
 		if ($desconto==1)
 			{
-				$venc2 = $obj['vencimento'];
-				}
+				$venc2 = $venc;
+			}
 		$data = date("Ymd");
 		$valor = $obj['valor'];
 		$taxa = 0;
@@ -358,7 +349,6 @@ class boletos extends CI_Model {
 								$wh2
 								GROUP BY bol_data_vencimento, bol_status
 						";
-		echo $sql;
 		$rlt = db_query($sql);
 		$rst = array();
 		while ($line = db_read($rlt)) {

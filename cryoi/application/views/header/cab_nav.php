@@ -1,134 +1,98 @@
-<?php
-$link = array();
-$link['01'] = base_url('index.php/contas_receber/boletos');
-$link['03'] = base_url('index.php/contas_receber/gerar_faturamento');
-$link['04'] = base_url('index.php/contas_receber/razao_boleto');
-?>
-<div id="nav">
-<div id="navleft">
+<style>
+	.navigation {
+		width: 400px;
+		height: 50px;
+	}
+	.nav {
+		margin: 0px;
+		padding: 0px;
+		list-style: none;
+	}
 
-	<ul>
+	.nav li {
+		float: left;
+		width: auto;
+		position: relative;
+		padding-right: 20px;
+	}
 
-		<li class="nav_li_n0">
-			<b>menu principal</b>
-		</li>
+	.nav li a {
+		background: #1d4161;
+		color: #ddd;
+		display: block;
+		padding: 7px 8px;
+		text-decoration: none;
+		border-top: 1px solid #069;
+	}
 
+	.nav li a:hover {
+		color: #fff;
+	}
+
+	/*=== submenu ===*/
+
+	.nav ul {
+		display: none;
+		position: absolute;
+		margin-left: 0px;
+		list-style: none;
+		padding: 0px;
+		background-color: #3d7191;
+	}
+
+	.nav ul li {
+		width: 160px;
+		float: left;
+	}
+
+	.nav ul a {
+		display: block;
+		height: 15px;
+		padding: 7px 8px;
+		color: #ddd;
+		text-decoration: none;
+		border-bottom: 1px solid #222;
+	}
+
+	.nav ul li a:hover {
+		color: #fff;
+	}
+</style>
+<div class='navigation'>
+	<ul class="nav">
 		<li>
-			<a href="#" id="menu01">Contas a receber</a>
-		</li>
-		<A href="#" class="link01">
-		<li style="display: none" id="menu01_01" class="nav_li_n2">
-			Faturas
-		</li></A>
-		<A href="<? echo $link['01']; ?>" class="link01">
-		<li style="display: none" id="menu01_02" class="nav_li_n2">
-			Boleto BancÂ´ario
-		</li></A>
-		<A href="<? echo $link['03']; ?>" class="link01">
-		<li style="display: none" id="menu01_03" class="nav_li_n2">
-			Gerar Faturamento
-		</li></A>
-		<A href="<? echo $link['04']; ?>" class="link01">
-		<li style="display: none" id="menu01_04" class="nav_li_n2">
-			Gerencial
-		</li></A>
-		<li>
-			<a href="#">ISO-9001</a>
-		</li>
-
-		<li>
-			<a href="#">Armazenamento</a>
-		</li>
-
-		<li>
-			<a href="#">Templates</a>
-		</li>
-
-		<li>
-			<a href="#">About</a>
+			<a href="<?php echo base_url('index.php/contas_receber/main'); ?>">Home</a>
 		</li>
 		<li>
-			<a href="<?php echo base_url('index.php/ic/row');?>">Enviar e-mail</a>
+			<A HREF="#">Contas a receber</A>
+			<ul>
+				<li>
+					<a href="<?php echo base_url('index.php/contas_receber/razao_boleto'); ?>">Razão Boletos</a>
+				</li>
+				<li>
+					<a href="<?php echo base_url('index.php/contas_receber/boletos'); ?>">Boletos</a>
+				</li>
+				<li>
+					<a href="<?php echo base_url('index.php/contas_receber/gerar_faturamento'); ?>">Gerar Faturamento</a>
+				</li>
+				<li>
+					<a href="<?php echo base_url('index.php/ic/row'); ?>">Enviar e-mail</a>
+				</li>
+			</ul>
 		</li>
-
 	</ul>
-
-</div>
-	<UL class="nav_ul_n0">
-		<LI class="nav_li_n0">
-			<b>menu principal</b>
-		</LI>
-		<LI class="nav_li_n1" >
-			
-		</LI>
-
-
-		<LI class="nav_li_n1" id="menu02">
-			Contratos
-		</LI>
-		<A href="#" class="link01">
-		<li style="display: none" id="menu02_01" class="nav_li_n2">
-			Todos do contratosuras
-		</li></A>
-		<A href="#" class="link01">
-		<li style="display: none" id="menu02_02" class="nav_li_n2">
-			Propostas de contrato
-		</li></A>
-
-		<LI class="nav_li_n1" id="menu03">
-			Armazenamento
-		</LI>
-		<A href="#" class="link01">
-		<li style="display: none" id="menu03_01" class="nav_li_n2">
-			Faturas
-		</li></A>
-		<A href="#" class="link01">
-		<li style="display: none" id="menu03_02" class="nav_li_n2">
-			Boleto Bancï¿½rio
-		</li></A>
-		<A href="#" class="link01">
-		<li style="display: none" id="menu03_03" class="nav_li_n2">
-			Gerar Faturamento
-		</li></A>
-
-		<LI class="nav_li_n1" id="menu04">
-			ISO-9001
-		</LI>
-		<A href="#" class="link01">
-		<li style="display: none" id="menu04_01" class="nav_li_n2">
-			Faturas
-		</li></A>
-		<A href="#" class="link01">
-		<li style="display: none" id="menu04_02" class="nav_li_n2">
-			Boleto Bancï¿½rio
-		</li></A>
-		<A href="#" class="link01">
-		<li style="display: none" id="menu04_03" class="nav_li_n2">
-			Gerar Faturamento
-		</li></A>
-
-	</UL>
 </div>
 
-<script>
-	$("#menu01").click(function() {
-		$("#menu01_01").fadeToggle(200);
-		$("#menu01_02").fadeToggle(400);
-		$("#menu01_03").fadeToggle(800);
-		$("#menu01_04").fadeToggle(1200);
-	});
-	$("#menu02").click(function() {
-		$("#menu02_01").fadeToggle(200);
-		$("#menu02_02").fadeToggle(400);
-	});
-	$("#menu03").click(function() {
-		$("#menu03_01").fadeToggle(400);
-		$("#menu03_02").fadeToggle(800);
-		$("#menu03_03").fadeToggle(1600);
-	});
-	$("#menu04").click(function() {
-		$("#menu04_01").fadeToggle(400);
-		$("#menu04_02").fadeToggle(600);
-		$("#menu04_03").fadeToggle(800);
+
+<script type="text/javascript">
+	$(document).ready(
+	/* This is the function that will get executed after the DOM is fully loaded */
+	function() {
+		/* Next part of code handles hovering effect and submenu appearing */
+		$('.nav li').hover(function() {//appearing on hover
+			$('ul', this).fadeIn();
+		}, function() {//disappearing on hover
+			$('ul', this).fadeOut();
+		});
 	}); 
 </script>

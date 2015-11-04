@@ -99,7 +99,12 @@ class emails extends CI_model {
 		$this -> load -> library('email', $config);
 
 		$email_to = $email['to'];
-		$email_to_alt = $email['cc'];
+		if (isset($email['cc']))
+			{
+				$email_to_alt = $email['cc'];
+			} else {
+				$email_to_alt = '';
+			}
 
 		$header = '		
 						<img src="http://www.cryogene.inf.br/cryo/img/email_banner.png"><br>

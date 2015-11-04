@@ -19,12 +19,12 @@ class contas_receber extends CI_Controller {
 
 	function index() {
 		$this -> load -> view('header/cab.php');
-		$this -> load -> view('header/cab_nav');
+		
 	}
 
 	function boletos() {
 		$this -> load -> view('header/cab.php');
-		$this -> load -> view('header/cab_nav');
+		
 		$this -> load -> model("boletos");
 		$this -> load -> model("emails");
 		$this->boletos->preparar_email_anuidade();
@@ -90,8 +90,14 @@ class contas_receber extends CI_Controller {
 		$this -> load -> view('header/cab.php');
 
 		$this -> load -> model("boletos");
-		$tela = $this -> boletos -> boleto_razao($ano1, $ano2, $gran,'B');
-		echo $tela;
+		$data['content'] = $this -> boletos -> boleto_razao($ano1, $ano2, $gran,'B').'<BR><BR>';
+		$data['title'] = 'Contas a receber - Boletos quitados';
+		$this->load->view('content',$data);
+
+
+		$data['content'] = $this -> boletos -> boleto_razao($ano1, $ano2, $gran,'A');
+		$data['title'] = 'Contas a receber - Boletos abertos';
+		$this->load->view('content',$data);
 	}
 
 }
