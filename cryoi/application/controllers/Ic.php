@@ -13,6 +13,21 @@ class ic extends CI_Controller {
 		//$this -> lang -> load("app", "portuguese");
 	}
 
+
+	function row()
+		{
+		$this -> load -> view('header/cab.php');
+
+		/* Load Models */
+		$this -> load -> model('emails');
+		
+		$data = array();	
+		$data['title'] = 'Lista de e-mail para enviar';
+		$sx = '<a href="'.base_url('index.php/ic/sendmail').'">Confirmar envio dos e-mail</A><BR>';	
+		$data['content'] = $sx. $this -> emails ->email_para_enviar();
+		$this->load->view('content',$data);
+			
+		}
 	function index($id=0) {
 		$this -> load -> view('header/cab.php');
 

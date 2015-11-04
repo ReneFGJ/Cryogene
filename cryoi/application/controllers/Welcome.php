@@ -44,7 +44,7 @@ class Welcome extends CI_Controller {
 		
 		$sql = "select * from ctr_data_coleta = '".brtos($dd[4])."' and (ctr_pai = '$cliente')";
 		echo $sql;
-		
+		echo '<A HREF="'.base_url('index.php/main/login').'">tt</A>';
 		$this->load->view('welcome_message',$data);
 	}
 }

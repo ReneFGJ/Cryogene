@@ -16,7 +16,7 @@ $this -> load -> view('header/cab_ajax_loading');
 	<div class="geral">
 		<div id="div1">
 			&nbsp;&nbsp;<a href="<?php echo base_url('pt_BR');?>"><img src="<?php echo base_url('img/ididoma_br.png');?>" border=0 title="Portugues" alt="Portugues"></A>
-			| 	<a href="<?php echo base_url('login');?>"><button class="btn login"> | Login admin</button></A>
+				| <?php echo $this->session->userdata('name');?>
 			<BR>
 			<BR>
 		</div>

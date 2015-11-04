@@ -22,7 +22,7 @@ $link['04'] = base_url('index.php/contas_receber/razao_boleto');
 		</li></A>
 		<A href="<? echo $link['01']; ?>" class="link01">
 		<li style="display: none" id="menu01_02" class="nav_li_n2">
-			Boleto Bancário
+			Boleto BancÂ´ario
 		</li></A>
 		<A href="<? echo $link['03']; ?>" class="link01">
 		<li style="display: none" id="menu01_03" class="nav_li_n2">
@@ -48,7 +48,7 @@ $link['04'] = base_url('index.php/contas_receber/razao_boleto');
 			<a href="#">About</a>
 		</li>
 		<li>
-			<a href="<?php echo base_url('index.php/ic/sendmail');?>">Enviar e-mail</a>
+			<a href="<?php echo base_url('index.php/ic/row');?>">Enviar e-mail</a>
 		</li>
 
 	</ul>
