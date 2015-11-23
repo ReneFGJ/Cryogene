@@ -21,30 +21,15 @@ class Welcome extends CI_Controller {
 		form_sisdoc_getpost();
 		$this->load->view('header/header');
 		$this->load->view('header/cab_client');
-		$cp = array();
-		array_push($cp,array('$H8','','',False,False));
-		array_push($cp,array('$M','','Informe CPF do pai ou da mãe',True,True));
-		array_push($cp,array('$S12','','&nbsp;',True,True));
-		array_push($cp,array('$M','','Informe a data de nascimento do Bebê',True,True));
-		array_push($cp,array('$D8','','&nbsp;',True,True));
-		array_push($cp,array('$B8','','Entrar',True,True));
+		$data = array();
 		
-		$form = new form;
-		$data['form'] = $form->editar($cp,'');
-		
-		/* Busca cliente */
-		if ($this->clientes->busca_cliente_cpf($dd[2]) > 0)
+		/* Dados do Login */
+		$cpf = get("dd1");
+		$nasc = get("dd2");
+		if ((strlen($cpf) > 0) and (strlen($nasc) > 0))
 			{
-				$data = $this->clientes->line;
-				$cliente = $data['cl_cliente'];
-			} else {
-				$cliente = 'xxxxxxx';
+				$this->clientes->login_cliente($cpf,$nasc);
 			}
-		
-		
-		$sql = "select * from ctr_data_coleta = '".brtos($dd[4])."' and (ctr_pai = '$cliente')";
-		echo $sql;
-		echo '<A HREF="'.base_url('index.php/main/login').'">tt</A>';
 		$this->load->view('welcome_message',$data);
 	}
 }

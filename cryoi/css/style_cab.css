@@ -249,17 +249,14 @@ h2 {
 	}
 
 	.link {
-		font-size: 11px;
 		color: #000080;
 		text-decoration: none;
 	}
 	.link a {
-		font-size: 11px;
 		color: #000000;
 		text-decoration: none;
 	}
 	.link:hover {
-		font-size: 11px;
 		color: #000000;
 		text-decoration: underline;
 	}

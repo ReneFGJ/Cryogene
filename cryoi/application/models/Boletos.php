@@ -176,8 +176,8 @@ class boletos extends CI_Model {
 				19000101,'S','$tipo',
 				
 				$venc2,'',0,				
-				0,19000101,
-				0,19000101
+				0,$venc2,
+				0,$venc2
 				)";
 		$this -> db -> query($xsql);
 

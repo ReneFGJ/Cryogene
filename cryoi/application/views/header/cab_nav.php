@@ -1,6 +1,6 @@
 <style>
 	.navigation {
-		width: 400px;
+		width: 800px;
 		height: 50px;
 	}
 	.nav {
@@ -61,8 +61,23 @@
 <div class='navigation'>
 	<ul class="nav">
 		<li>
-			<a href="<?php echo base_url('index.php/contas_receber/main'); ?>">Home</a>
+			<a href="<?php echo base_url('index.php/main'); ?>">Home</a>
 		</li>
+		<li>
+		<li>
+			<A HREF="#">Clientes</A>
+			<ul>
+				<li>
+					<a href="<?php echo base_url('index.php/cliente/busca'); ?>">Busca cliente</a>
+				</li>
+				<li>
+					<a href="<?php echo base_url('index.php/cliente/row'); ?>">Cadastro do cliente</a>
+				</li>
+			</ul>
+		</li>	
+		<li>		
+			<A HREF="<?php echo base_url('index.php/contrato'); ?>">Contratos</A>
+		</li>		
 		<li>
 			<A HREF="#">Contas a receber</A>
 			<ul>
@@ -79,6 +94,9 @@
 					<a href="<?php echo base_url('index.php/ic/row'); ?>">Enviar e-mail</a>
 				</li>
 			</ul>
+		</li>
+		<li>
+			<a href="<?php echo base_url('index.php/main/logout'); ?>">Sair</a>
 		</li>
 	</ul>
 </div>

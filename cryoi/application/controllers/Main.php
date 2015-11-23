@@ -19,17 +19,21 @@ class main extends CI_Controller {
 		
 		$this->load->view('forms/search_form');
 	}
-
+	function logout()
+		{
+		$this->load->model('securitys');
+		
+		redirect(base_url('index.php/main/login'));	
+		}
 	function login()
 		{
 			$this->load->model('securitys');
-			$dd1 = troca($this->input->post('user'),"'",'Â´');
-			$dd2 = troca($this->input->post('pass'),"'",'Â´');
+			$dd1 = troca($this->input->post('user'),"'",'´');
+			$dd2 = troca($this->input->post('pass'),"'",'´');
 			if ((strlen($dd1) > 0) and (strlen($dd2) > 0))
 				{
 					if ($this->valida_login($dd1,$dd2))
 						{
-							print_r($this->session->userdata());
 							echo 'Autenticado'; exit;							
 						} else {
 							echo 'Erro de senha'; exit;

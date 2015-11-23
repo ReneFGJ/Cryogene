@@ -16,11 +16,23 @@ class emails extends CI_model {
 						
 			$rlt = $this->db->query($sql);
 			$rlt = $rlt->result_array();
-			$sx = '<table width="100%">';
+			$sx = '<table width="100%" class="tabela01 lt1">';
+			$sx .= '<tr align="center">
+						<th width="8%">contrato</th>
+						<th width="8%">vencimento</th>
+						<th width="8%">processamento - data</th>
+						<th width="8%">processamento - hora</th>
+						<th>descrição</th>
+						<th>sacado</th>
+					</tr>
+					';
 			$tot =0;
 			for ($r=0;$r < count($rlt);$r++)
 				{
 					$line = $rlt[$r];
+					
+					$link = '<a href="'.base_url('index.php/contrato/view/'.$line['rp_contrato'].'/'.checkpost_link($line['rp_contrato'])).'">';
+					
 					$venc = $line['venc'];
 					if ($venc < date("Ymd"))
 						{
@@ -30,16 +42,16 @@ class emails extends CI_model {
 					
 					$tot++;
 					$sx .= '<tr>';
-					$sx .= '<td>';
-					$sx .= $line['rp_contrato'];
+					$sx .= '<td align="center">';
+					$sx .= $link.$line['rp_contrato'].'</a>';
 					$sx .= '</td>';					
-					$sx .= '<td>';
-					$sx .= $line['venc'];
+					$sx .= '<td align="center">';
+					$sx .= stodbr($line['venc']);
 					$sx .= '</td>';					
-					$sx .= '<td>';
-					$sx .= $line['rp_data'];
+					$sx .= '<td align="center">';
+					$sx .= stodbr($line['rp_data']);
 					$sx .= '</td>';
-					$sx .= '<td>';
+					$sx .= '<td align="center">';
 					$sx .= $line['rp_hora'];
 					$sx .= '</td>';
 					$sx .= '<td>';

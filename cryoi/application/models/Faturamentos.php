@@ -84,6 +84,9 @@ class faturamentos extends CI_model {
 			}
 		}
 		$sx .= '</table>';
+		
+		/* Gerar e-mail */
+		$this->boletos->preparar_email_anuidade();
 		return ($sx);
 
 	}
