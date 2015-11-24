@@ -2,6 +2,13 @@
 $this -> load -> view("header/header");
 //$this -> load -> view('header/analytics.google.php');
 $this -> load -> view('header/cab_ajax_loading');
+
+/* */
+$user = $this->session->userdata('name');
+if (strlen($user)==0)
+	{
+		redirect(base_url('index.php/'));
+	}
 ?>
 <div class="cab">
 	<div class="menu_left">
@@ -16,7 +23,7 @@ $this -> load -> view('header/cab_ajax_loading');
 	<div class="geral">
 		<div id="div1">
 			&nbsp;&nbsp;<a href="<?php echo base_url('pt_BR');?>"><img src="<?php echo base_url('img/ididoma_br.png');?>" border=0 title="Portugues" alt="Portugues"></A>
-				| <?php echo $this->session->userdata('name');?>
+				| <?php echo $user;?>
 			<BR>
 			<BR>
 		</div>
