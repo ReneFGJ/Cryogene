@@ -15,13 +15,23 @@ class client extends CI_Controller {
 	}
 
 	function index() {
-		$this -> load -> view('header/cab.php');
-		$this -> load -> view('header/cab_nav_client');
+		$this -> load -> view('header/cab_client.php');
 
 		for ($r = 0; $r < 1; $r++) {
 			$data = array();
 			$this -> load -> view('client/contrato_mini', $data);
 		}
+	}
+	
+	function contrato()
+		{
+		$this -> load -> view('header/cab_client.php');	
+		}
+
+	function logout() {
+		$newdata = array('contrato_nome' => '', 'contrato' => '', 'ctr' => '');
+		$this -> session -> set_userdata($newdata);
+		redirect(base_url('index.php/'));
 	}
 
 }

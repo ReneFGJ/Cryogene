@@ -4,6 +4,7 @@ class clientes extends CI_model {
 	var $cliente='';
 	var $cpf='';
 	var $line=array();
+	var $erro = '';
 	
 	function le($id)
 		{
@@ -42,11 +43,40 @@ class clientes extends CI_model {
 		}
 	
 	function login_cliente($cpf,$nasc) {
-		$cpf = sonumero($cpf);
+		$nasc = brtos($nasc);
 		$sql="select * from cliente where cl_cpf = '".$cpf."'";
-		echo $sql;
 		$rlt=$this->db->query($sql);
 		$rlt=$rlt->result_array();
+		if (count($rlt) > 0)
+			{
+				$line = $rlt[0];
+				$cliente = $line['cl_codigo'];
+				$cliente_nome = $line['cl_nome'];
+				$sql = "select * from contrato 
+							left join coleta on col_contrato = ctr_numero 
+							where ctr_mae = '$cliente' or ctr_pai = '$cliente' 
+										or ctr_cobranca = '$cliente' ";
+				$rlt = $this->db->query($sql);
+				$rlt = $rlt->result_array();
+				for ($r=0;$r < count($rlt);$r++)
+					{
+						$linex = $rlt[$r];
+						$data = $linex['col_dp_data'];
+						$contrato = $linex['ctr_numero'];
+
+						if ($nasc == $data)
+							{
+								$newdata = array('contrato_nome'=>$cliente_nome, 'contrato' => $contrato, 'ctr' => checkpost_link($contrato));
+								$this->session->set_userdata($newdata);
+								redirect(base_url('index.php/client'));
+							}
+					}
+				$msg = 'Data de nascimento não confere';
+				$this->erro = $msg;
+			} else {
+				$msg = 'Erro de Login';
+				$this->erro = $msg;
+			}
 	}
 	
 	function busca_cliente($nome,$cpf)

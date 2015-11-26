@@ -1,18 +1,87 @@
-<?php
-$link = array();
-$link['01'] = base_url('client/contract');
-$link['02'] = base_url('client/invoice');
-$link['03'] = base_url('client/message');
-?>
-<div id="nav">
-	<UL class="nav_ul_n0">
-		<LI class="nav_li_n0">
-			<b>Informações</b>
-		</LI>
-		<A href="<? echo $link['01'];?>" class="link01"><li id="menu01_01" class="nav_li_n2">Contrato</li></A>
-		<A href="<? echo $link['02'];?>" class="link01"><li id="menu01_02" class="nav_li_n2">Pagamentos</li></A>
-		<A href="<? echo $link['03'];?>" class="link01"><li id="menu01_02" class="nav_li_n2">Mensagens</li></A>
+<style>
+	.navigation {
+		width: 800px;
+		height: 50px;
+	}
+	.nav {
+		margin: 0px;
+		padding: 0px;
+		list-style: none;
+	}
 
-	</UL>
+	.nav li {
+		float: left;
+		width: auto;
+		position: relative;
+		padding-right: 20px;
+	}
+
+	.nav li a {
+		background: #1d4161;
+		color: #ddd;
+		display: block;
+		padding: 7px 8px;
+		text-decoration: none;
+		border-top: 1px solid #069;
+	}
+
+	.nav li a:hover {
+		color: #fff;
+	}
+
+	/*=== submenu ===*/
+
+	.nav ul {
+		display: none;
+		position: absolute;
+		margin-left: 0px;
+		list-style: none;
+		padding: 0px;
+		background-color: #3d7191;
+	}
+
+	.nav ul li {
+		width: 160px;
+		float: left;
+	}
+
+	.nav ul a {
+		display: block;
+		height: 15px;
+		padding: 7px 8px;
+		color: #ddd;
+		text-decoration: none;
+		border-bottom: 1px solid #222;
+	}
+
+	.nav ul li a:hover {
+		color: #fff;
+	}
+</style>
+<div class='navigation'>
+	<ul class="nav">
+		<li>
+			<a href="<?php echo base_url('index.php/client'); ?>">Home</a>
+		</li>
+		<li>		
+			<A HREF="<?php echo base_url('index.php/client/contrato'); ?>">Dados do Armazenamento</A>
+		</li>		
+		<li>
+			<a href="<?php echo base_url('index.php/client/logout'); ?>">Sair</a>
+		</li>
+	</ul>
 </div>
 
+
+<script type="text/javascript">
+	$(document).ready(
+	/* This is the function that will get executed after the DOM is fully loaded */
+	function() {
+		/* Next part of code handles hovering effect and submenu appearing */
+		$('.nav li').hover(function() {//appearing on hover
+			$('ul', this).fadeIn();
+		}, function() {//disappearing on hover
+			$('ul', this).fadeOut();
+		});
+	}); 
+</script>
