@@ -12,6 +12,11 @@ class client extends CI_Controller {
 		$this -> load -> helper('url');
 		$this -> load -> library('session');
 		//$this -> lang -> load("app", "portuguese");
+		
+		if (!isset($_SESSION['contrato']))
+			{
+				redirect(base_url('index.php'));
+			}
 	}
 
 	function index() {
