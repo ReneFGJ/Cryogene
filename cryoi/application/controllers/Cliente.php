@@ -41,8 +41,9 @@ class cliente extends CI_Controller {
 		$this -> load -> view('client/busca');
 		
 		/* Busca */
-		$nome = get("dd1");
+		$nome = rawurldecode(get("dd1"));
 		$cpf = get("dd2");
+		
 		if (strlen($nome.$cpf) > 0)
 			{
 				$tela = $this->clientes->busca_cliente($nome,$cpf);

@@ -63,9 +63,14 @@
 		<li>
 			<a href="<?php echo base_url('index.php/client'); ?>">Home</a>
 		</li>
+		<!--
 		<li>		
 			<A HREF="<?php echo base_url('index.php/client/contrato'); ?>">Dados do Armazenamento</A>
-		</li>		
+		</li>
+		-->	
+		<li>		
+			<A HREF="<?php echo base_url('index.php/client/contact'); ?>">Contato com a Cryogene</A>
+		</li>			
 		<li>
 			<a href="<?php echo base_url('index.php/client/logout'); ?>">Sair</a>
 		</li>

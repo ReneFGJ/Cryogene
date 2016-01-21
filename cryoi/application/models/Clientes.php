@@ -89,7 +89,10 @@ class clientes extends CI_model {
 				{
 					$cpf = 'SEM CPF';
 				}
-			
+			if (strlen($nome) == 0)
+				{
+					$wh = '(1=2';
+				}
 			/* Nome */
 			for ($r=0;$r < count($keys);$r++)
 				{
@@ -107,6 +110,7 @@ class clientes extends CI_model {
 				($wh)		
 				order by cl_nome
 			";
+
 			$rlt = $this->db->query($sql);
 			$rlt = $rlt->result_array();
 			$sx = '<table width="100%" class="tabela00 lt2">';

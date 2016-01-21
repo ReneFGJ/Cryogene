@@ -2,7 +2,7 @@
 <tr><td width="20%"></td><td width="80%"></td></tr>
 <tr>
 	<td align="right">Contrato número</td>
-	<td class="lt3"><B>001012/12</B></td>
+	<td class="lt3"><B><?php echo $ctr_numero;?></B></td>
 </tr>
 
 <!--- Filiação --->
@@ -13,11 +13,11 @@
 
 <tr>
 	<td align="right">Nome do pai</td>
-	<td class="lt2">Fulano de Tal da Silva Chavier</td>
+	<td class="lt2"><?php echo $pai_nome;?></td>
 </tr>
 <tr>
 	<td align="right">Nome mãe</td>
-	<td class="lt2">Ciclana de Tal e Silva</td>
+	<td class="lt2"><?php echo $mae_nome;?></td>
 </tr>
 
 
@@ -30,7 +30,7 @@
 
 <tr>
 	<td align="right">Data do nascimento do bebê</td>
-	<td class="lt1">05/10/2013</td>
+	<td class="lt1"><?php echo stodbr($ctr_parto_data);?></td>
 </tr>
 <tr>
 	<td align="right">Situação</td>
@@ -44,10 +44,6 @@
 </tr>
 <tr>
 	<td align="right">Valor armazenamento<BR>(atual)</td>
-	<td class="lt2"><b>R$ 643,00</b></td>
-</tr>
-<tr>
-	<td align="right">Vencimento do armazenamento</td>
-	<td class="lt1">05/06/2015 (<font color="red">Em aberto</font>)</td>
+	<td class="lt2"><b>R$ <?php echo number_format($ctr_anuidade_atual,2,',','.');?></b></td>
 </tr>
 </table>

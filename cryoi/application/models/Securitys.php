@@ -7,9 +7,6 @@ class securitys extends CI_model {
 	function security()
 		{
 			$arr = $this->session->userdata();
-			print_r($arr);
 		}
-
 }
 ?>
-

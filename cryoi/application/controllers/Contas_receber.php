@@ -21,6 +21,17 @@ class contas_receber extends CI_Controller {
 		$this -> load -> view('header/cab.php');
 		
 	}
+	
+	function boletos_atrasados() {
+		$this -> load -> view('header/cab.php');
+		
+		$this -> load -> model("boletos");
+		$this -> load -> model("emails");
+		$tela = $this->boletos->boletos_atrasados();
+		$data['content'] = $tela;
+		$this->load->view("content",$data);
+		
+	}	
 
 	function boletos() {
 		$this -> load -> view('header/cab.php');

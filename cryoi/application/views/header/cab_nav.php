@@ -74,10 +74,19 @@
 					<a href="<?php echo base_url('index.php/cliente/row'); ?>">Cadastro do cliente</a>
 				</li>
 			</ul>
-		</li>	
-		<li>		
+		</li>
+		<li>
 			<A HREF="<?php echo base_url('index.php/contrato'); ?>">Contratos</A>
-		</li>		
+		</li>
+		<li>
+			<A HREF="#">Relacionamento Cliente</A>
+			<ul>
+				<li>
+					<a href="<?php echo base_url('index.php/contas_receber/boletos_atrasados'); ?>">Boletos atrasados</a>
+				</li>
+			</ul>
+
+		</li>
 		<li>
 			<A HREF="#">Contas a receber</A>
 			<ul>
@@ -100,7 +109,6 @@
 		</li>
 	</ul>
 </div>
-
 
 <script type="text/javascript">
 	$(document).ready(

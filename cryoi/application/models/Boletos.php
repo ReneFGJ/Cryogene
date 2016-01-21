@@ -1,5 +1,87 @@
 <?php
 class boletos extends CI_Model {
+	
+	function boletos_atrasados()
+		{
+			$sql = "select * from (
+						select bol_contrato, count(*) as boletos, sum(bol_valor_boleto) AS valor
+						FROM cr_boleto 
+						WHERE bol_status ='A' 
+							AND bol_data_vencimento < ".date("Ymd")."
+						GROUP BY bol_contrato
+						) as tabela
+					INNER JOIN contrato on bol_contrato = ctr_numero
+					INNER JOIN cliente on ctr_responsavel = cl_codigo
+					LEFT JOIN (select crl_contrato, max(crl_data) as contato from cliente_relacionamento group by crl_contrato ) as contato on crl_contrato = ctr_numero
+					ORDER BY valor DESC
+					
+					";
+			$rlt = $this->db->query($sql);
+			$rlt = $rlt->result_array();
+			$tot1=0;
+			$tot2=0;
+			$tot3=0;
+			$sx = '<table width="100%" class="tabela00 lt2">';
+			$sx .= '<tr>
+						<th>contrato</th>
+						<th>responsável financeiro</th>
+						<th>ativo em</th>
+						<th>valor aberto</th>
+						<th>último contato</th>						
+					</tr>';
+			for ($r=0;$r < count($rlt);$r++)
+				{
+					$line = $rlt[$r];
+					
+					/* Link */
+					$link = base_url('index.php/contrato/view/'.$line['bol_contrato'].'/'.checkpost_link($line['bol_contrato']));
+					
+					$sx .= '<tr>';
+					$sx .= '<td align="center" width="80">';
+					$sx .= '<a href="'.$link.'" class="lt1 link" target="_new">';
+					$sx .= $line['bol_contrato'];
+					$sx .= '</td>';	
+					
+					$sx .= '<td>';
+					$sx .= $line['ctr_responsavel_nome'];
+					$sx .= '</td>';
+					
+					$sx .= '<td align="center">';
+					$sx .= stodbr($line['ctr_dt_assinatura']);
+					$sx .= '</td>';
+					
+					$sx .= '<td align="right">';
+					$sx .= '('.$line['boletos'].') ';
+					$sx .= number_format($line['valor'],2,',','.');
+					$sx .= '</td>';						
+					
+					$sx .= '<td align="center">';
+					$sx .= stodbr($line['contato']);
+					$sx .= '</td>';
+					
+					
+					$tot1 = $tot1 + $line['valor'];
+					$tot2 = $tot2 + $line['boletos'];
+					$tot3++;
+				}
+			$sx .= '</table>';
+				
+			$sz = '';
+			$sa = '<table width="100%" class="tabela00">';
+			$sa .= '<tr>
+						<th>clientes</th>
+						<th>boletos</th>
+						<th>valor total</th>
+					</tr>';	
+			$sa .= '<tr align="center" class="lt5">
+						<td '.$sz.'>'.$tot3.'</td>
+						<td '.$sz.'>'.$tot2.'</td>
+						<td>'.number_format($tot1,2,',','.').'</td>
+					</tr>';
+			$sa .= '</table>';
+			
+			return($sa.$sx);
+		}
 
 	function preparar_email_anuidade($venc = 0) {
 		$sql = "select * from ic_noticia 

@@ -5,19 +5,30 @@ class main extends CI_Controller {
 
 		$db_public = 'brapci_publico.';
 		parent::__construct();
+		$this -> lang -> load("app", "portuguese");
 		$this -> load -> library('form_validation');
 		$this -> load -> database();
 		$this -> load -> helper('form');
 		$this -> load -> helper('form_sisdoc');
 		$this -> load -> helper('url');
 		$this -> load -> library('session');
-		//$this -> lang -> load("app", "portuguese");
+		
 	}
 
 	function index() {
+		$this->load->model('contratos');
+		
 		$this -> load -> view('header/cab.php');
 		
 		$this->load->view('forms/search_form');
+		
+		$dd1 = get("dd1");
+		if (strlen($dd1) > 0)
+			{
+				$data = array();
+				$data['content'] = $this->contratos->busca($dd1);
+				$this->load->view('content',$data);
+			}
 	}
 	function logout()
 		{
