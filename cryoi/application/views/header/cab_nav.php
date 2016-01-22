@@ -73,10 +73,21 @@
 				<li>
 					<a href="<?php echo base_url('index.php/cliente/row'); ?>">Cadastro do cliente</a>
 				</li>
+				<li>
+					<a href="<?php echo base_url('index.php/cliente/row_limbo'); ?>">Cliente (autocadastro)</a>
+				</li>				
 			</ul>
 		</li>
 		<li>
-			<A HREF="<?php echo base_url('index.php/contrato'); ?>">Contratos</A>
+			<A HREF="#">Contratos</A>
+			<ul>
+				<li>
+					<a href="<?php echo base_url('index.php/contrato'); ?>">Contratos</a>
+				</li>
+				<li>
+					<a href="<?php echo base_url('index.php/contrato/resumo'); ?>">Situação</a>
+				</li>
+			</ul>			
 		</li>
 		<li>
 			<A HREF="#">Relacionamento Cliente</A>

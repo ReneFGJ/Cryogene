@@ -20,6 +20,16 @@ class contrato extends CI_Controller {
 	function index() {
 		$this -> load -> view('header/cab.php');
 	}
+	
+	function resumo() {
+		$this -> load -> model('contratos');
+		$this -> load -> view('header/cab.php');
+		
+		$tela = $this->contratos->resumo();
+		$data['content'] = $tela;
+		$this->load->view('content',$data);
+	}
+	
 
 	function view($id = 0, $chk = '') {
 		/* Model */

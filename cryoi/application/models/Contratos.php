@@ -1,6 +1,23 @@
 <?php
 class contratos extends CI_model
 	{
+	function resumo()
+		{
+			$sql = "select ctr_status, count(*) as total, substring(ctr_dt_assinatura,1,4) as ano
+						FROM contrato 
+						GROUP BY ano, ctr_status";
+						
+			$rlt = $this->db->query($sql);
+			$rlt = $rlt->result_array();
+			for ($r=0;$r < count($rlt);$r++)
+				{
+					$line = $rlt[$r];
+					
+					$ano = $line['ano'];
+					print_r($line);
+					echo '<hr>';
+				}
+		}
 	function status($sta) {
 		switch($sta) {
 			case 'S' :
