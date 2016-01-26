@@ -1,6 +1,56 @@
 <?php
 class boletos extends CI_Model {
 	
+	function negociacao_row($obj) {
+		$obj -> fd = array('id_tn', 'tn_descricao', 'tn_entrada', 'tn_avista', 'tn_parcelas', 'tn_desconto_juros');
+		$obj -> lb = array('ID', 'Descrição', 'Entrada', 'Avista', 'Parcelas','Desc. nos Juros');
+		$obj -> mk = array('', 'L', 'C', 'C', 'C', 'C','C','C');
+		return ($obj);
+	}
+
+	/* Dados de edição*/
+	function negociacao_cp() {
+		$cp = array();
+		array_push($cp, array('$H', 'id_tn', '', False, True));
+		array_push($cp, array('$S100', 'tn_descricao', 'Nome de citação', True, True));
+		
+		array_push($cp, array('$O 1:SIM&0:NÃO', 'tn_avista', 'Com entrada', True, True));
+		array_push($cp, array('$[0-100]', 'tn_entrada', 'Percentual da entrada', True, True));
+		array_push($cp, array('$[0-36]', 'tn_parcelas', 'Parcelas a prazo', True, True));
+		array_push($cp, array('$[0-100]', 'tn_desconto_juros', 'Percentual ddesconto nos juros', True, True));
+		array_push($cp, array('$O 1:SIM&0:NÃO', 'tn_ativo', 'Ativo', True, True));
+		/* Botao */
+		array_push($cp, array('$B8', '', 'Gravar >>>', False, True));
+		return ($cp);
+	}	
+	
+	function geraTimestamp($data) {
+			$partes = array();
+			$data = sonumero($data);
+			$partes[0] = substr($data,6,2);
+			$partes[1] = substr($data,4,2);
+			$partes[2] = substr($data,0,4);
+			return mktime(0, 0, 0, $partes[1], $partes[0], $partes[2]);
+		}
+	
+	function correcao_boletos($venc,$valor)
+		{
+			$tx_juros = 2.2;
+			$tx_juros = (($tx_juros)/100);
+			$time_final = $this->geraTimestamp(date("Ymd"));
+			$time_inicial = $this->geraTimestamp($venc);
+			$diferenca = $time_final - $time_inicial;
+			
+			$dias = (int)floor( $diferenca / (60 * 60 * 24)); // 225 dias
+			
+			$juros = $valor + $tx_juros / 30 * $valor;
+			for ($r=1; $r <= $dias; $r++)
+				{
+					$juros = $juros + ($tx_juros / 30 * $valor);
+				}
+			return(array($dias,$juros));
+		}
+	
 	function boletos_atrasados()
 		{
 			$sql = "select * from (

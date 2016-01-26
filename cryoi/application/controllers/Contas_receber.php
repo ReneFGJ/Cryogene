@@ -41,6 +41,52 @@ class contas_receber extends CI_Controller {
 		$this->boletos->preparar_email_anuidade();
 	}
 	
+	function taxa_negociacao($id=0)
+		{
+		$this -> load -> model("boletos");
+		$this -> load -> view('header/cab.php');
+		
+		$form = new form;
+		$form -> tabela = 'taxa_negociacao';
+		$form -> see = FALSE;
+		$form -> novo = TRUE;
+		$form->row = base_url('index.php/contas_receber/taxa_negociacao');
+		$form->row_view = '';
+		$form->row_edit = base_url('index.php/contas_receber/taxa_negociacao_ed');
+		$form->edit = True;
+		$form = $this -> boletos -> negociacao_row($form);
+		
+		
+		$tela['content'] = row($form,$id);
+		$tela['title'] = 'Negociação';
+
+		$this -> load -> view('content', $tela);
+			
+		}
+		
+	function taxa_negociacao_ed($id = '') {
+		$this -> load -> model("boletos");
+		$this -> load -> view('header/cab.php');
+
+		/* Formulario */
+		$form = new form;
+		$form -> id = $id;
+		$form -> tabela = 'taxa_negociacao';
+			$form -> row = base_url('index.php/contas_receber/taxa_negociacao_ed/'.$id.'/'.checkpost_link($id));
+			$form -> cp = $this -> boletos -> negociacao_cp();
+	
+			/* form */
+			$data['content'] = $form -> editar($form -> cp, $form -> tabela);
+			$data['title'] = msg('taxa_negociacao');
+			$this -> load -> view('content', $data);			
+	
+			if ($form -> saved > 0) {
+				$url = base_url('index.php/contas_receber/taxa_negociacao');
+				redirect($url);
+			}			
+
+		}		
+	
 	function gerar_faturamento_emitir($id,$chk) {
 		/* Models */
 		$this -> load -> model("faturamentos");

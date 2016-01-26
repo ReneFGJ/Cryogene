@@ -32,7 +32,7 @@ if ($boleto_aberto > 0) {
 	<div id="DR6a" style="display: none;"><?php $this -> load -> view('contrato_message'); ?></div>
 	<div id="DR7a" style="display: none;"><?php $this -> load -> view('contrato_rp'); ?></div>
 	<div id="DR8a" style="display: none;"><?php echo $DadosContatos; ?></div>
-	<div id="DR9a" style="display: none;">Negociação</div>
+	<div id="DR9a" style="display: none;"><?php $this -> load -> view('boleto_negicacao'); ?></div>
 </div>
 </nav>
 

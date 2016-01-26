@@ -116,6 +116,14 @@
 			</ul>
 		</li>
 		<li>
+			<A HREF="#">Admin</A>
+			<ul>
+				<li>
+					<a href="<?php echo base_url('index.php/contas_receber/taxa_negociacao'); ?>">Tipos de Negociação</a>
+				</li>
+			</ul>
+		</li>		
+		<li>
 			<a href="<?php echo base_url('index.php/main/logout'); ?>">Sair</a>
 		</li>
 	</ul>
